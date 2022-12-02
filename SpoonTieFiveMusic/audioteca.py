@@ -1,7 +1,8 @@
 import xml.etree.ElementTree as ET
 from tkinter import *
 from tkinter import ttk
-from tkinter.filedialog import askopenfilenames
+from tkinter import filedialog
+import datetime
 
 #needed variables
 page=0
@@ -13,8 +14,8 @@ filename="MusicaXML/audioteca.xml"
 wndw=Tk()
 wndw['bg']="black"
 wndw.title("SpoonTieFive")
-icono=PhotoImage(file="src/icono.png")
-wndw.iconphoto(True,icono)
+app_icon=PhotoImage(file="src/icono.png")
+wndw.iconphoto(True,app_icon)
 wndw.geometry("870x1000")
 
 #Images
@@ -23,13 +24,15 @@ icon_change_green=PhotoImage(file = "src/cambiarverde2.png")
 icon_cd=PhotoImage(file = "src/disco.png")
 arrow_icon=PhotoImage(file = "src/flecha.png")
 arrowLeft_icon=PhotoImage(file="src/flechaizq.png")
+delete_icon=PhotoImage(file="src/borrar.png")
 
 #Basic Labels and Buttons
-l1=Button(wndw,
+l1newdisk=Button(wndw,
         image=icon_new,
         background="black",
         width=60,
-        height=60).grid(row=0, column=0)
+        height=60)
+l1newdisk.grid(row=0, column=0)
 
 l2=Label(wndw,
         text="Spoon Tie Five",
@@ -37,18 +40,19 @@ l2=Label(wndw,
         background="black",
         fg="#00bf36").grid(row=0, column=1, columnspan=2, rowspan=2, padx=100) 
 
-l3=Button(wndw,
+l3xml=Button(wndw,
         image=icon_change_green,
         background="black",
         width=60,
-        height=60).grid(row=0, column=3)
+        height=60)
+l3xml.grid(row=0, column=3)
 
-l4=Label(wndw,
-        text="fichero: cambiar en codigo",
+l4file=Label(wndw,
+        text="fichero: audioteca.xml",
         font="Verdana 15",
         background="black",
         fg="#00bf36")
-l4.grid(row=2, column=1, columnspan=2, sticky="s")        
+l4file.grid(row=2, column=1, columnspan=2, sticky="s")        
 
 l4_2=Label(
         wndw,
@@ -70,8 +74,7 @@ l6=Label(wndw,
         text="cambiar xml",
         font="Verdana 15",
         background="black",
-        fg="#949494")
-l6.grid(row=1, column=3)                       
+        fg="#949494").grid(row=1, column=3)                       
 
 l7=Label(
         wndw,
@@ -96,6 +99,7 @@ root=tree.getroot()
 numDisks=len(root)
 list_d=[]
 list_n=[]
+list_p=[]
 nrow=4
 ncolumn=1
 for i in range(6):
@@ -105,20 +109,34 @@ for i in range(6):
                 width=150,
                 height=150
         )
+
         n=Label(
                 wndw,
                 font="Verdana 15"
         )
+
+        p=Button(
+                wndw,
+                image=delete_icon,
+                width=20,
+                height=20,
+                background="black"
+        )
+
         list_d.append(d)
-        list_n.append(n)        
+        list_n.append(n)
+        list_p.append(p)        
         if(numDisks>=i+1):
                 if(i%2==0):
                         list_d[i].grid(row=nrow, column=ncolumn, sticky="e", padx=15, pady=15)
+                        list_p[i].grid(row=nrow, column=ncolumn, sticky="ne", pady=15, padx=15)
                 else:
                         list_d[i].grid(row=nrow, column=ncolumn, sticky="w", padx=15, pady=15)
+                        list_p[i].grid(row=nrow, column=ncolumn, sticky="nw",padx=15, pady=15)
+                        
                 name=limitname(root[i].attrib["nombre"])
-                list_n[i].grid(row=nrow, column=ncolumn, sticky="s")
                 list_n[i].configure(text=name)
+                list_n[i].grid(row=nrow, column=ncolumn, sticky="s")
 
                 if(i%2==1):
                         ncolumn=1
@@ -145,27 +163,26 @@ arrowL=Button(
 
 #more functions
 def changeDisksView():
-        global root
-        global page
-        global numDisks
-        global list_d
-        global list_n
+        global root, page, numDisks, list_d, list_n, list_p
         position=page*6
-        
+
         nrow=4
         ncolumn=1
         for i in range(6):
                 if(position+1<=numDisks):
                         if(i%2==0):
                                 list_d[i].grid(row=nrow, column=ncolumn, sticky="e", padx=15, pady=15)
+                                list_p[i].grid(row=nrow, column=ncolumn, sticky="ne", pady=15, padx=15)
                         else:
-                                list_d[i].grid(row=nrow, column=ncolumn, sticky="w", padx=15, pady=15)       
+                                list_d[i].grid(row=nrow, column=ncolumn, sticky="w", padx=15, pady=15)
+                                list_p[i].grid(row=nrow, column=ncolumn, sticky="nw",padx=15, pady=15)       
                         list_n[i].grid(row=nrow, column=ncolumn, sticky="s")
 
                         list_n[i].config(
                                 text=limitname(root[position].attrib["nombre"])
                         )
                 else:
+                        list_p[i].grid_forget()
                         list_n[i].grid_forget()
                         list_d[i].grid_forget()
 
@@ -212,13 +229,42 @@ if(numDisks>6):
                 height=10
         ).grid(row=7, column=0)
 
+#function for updating disks
+def changeXML():
+        global root, tree, filename, numDisks, page, arrowR
+        lastfilename=filename
+        first_page()
+        filename=filedialog.askopenfilename(title = "Select file",filetypes = (("XML Files","*.xml"),))
+        if(len(filename)<4):
+                filename=lastfilename
+        tree = ET.parse(filename)
+        root=tree.getroot()
+        numDisks=len(root)
+        page=0
+        if(numDisks>6):
+                arrowR.grid(row=7, column=2)
+        else:
+                arrowR.grid_forget
+        changeDisksView()                
 
 
- 
+def first_page():
+        global arrowL, page, numDisks, arrowR
+        arrowL.grid_forget()
+        page=0
+        if numDisks>6:
+                arrowR.grid(row=7, column=2)
+        else:
+                arrowR.grid_forget()        
+        changeDisksView()
+
+l3xml.configure(
+        command=changeXML
+)
+
+#obtain current year
+currentDateTime = datetime.datetime.now()
+date = currentDateTime.date()
+year = date.strftime("%Y")
 
 wndw.mainloop()
-
-
-  
-
-

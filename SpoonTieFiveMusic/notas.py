@@ -2,29 +2,21 @@ import xml.etree.ElementTree as ET
 from tkinter import *
 from tkinter import ttk
 from tkinter.filedialog import askopenfilename
+import datetime
 
-ventana=Tk()
-
-
-cont=0
-
-def hideWidget():
-    global cont
-    print(cont)
-    cont+=1
-
-b=Button(
-    ventana,
-    width=1,
-    height=1,
-    background="black",
-    text="hola",
-    command=hideWidget
-)
-
-b.grid(column=0, row=0)
+filename="MusicaXML/audioteca2.xml"
+tree = ET.parse(filename)
+root=tree.getroot()
 
 
 
-ventana.mainloop()
+currentDateTime = datetime.datetime.now()
+date = currentDateTime.date()
+year = date.strftime("%Y")
+print(year)
 
+
+
+root.append()
+fichero=ET.ElementTree(root)
+fichero.write(filename)
