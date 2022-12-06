@@ -3,9 +3,11 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 import datetime
+import os
 
 #needed variables
 page=0
+visibleDisks=[0,1,2,3,4,5]
 
 #xml file
 filename="MusicaXML/audioteca.xml"
@@ -25,6 +27,7 @@ icon_cd=PhotoImage(file = "src/disco.png")
 arrow_icon=PhotoImage(file = "src/flecha.png")
 arrowLeft_icon=PhotoImage(file="src/flechaizq.png")
 delete_icon=PhotoImage(file="src/borrar.png")
+electronic_icon=PhotoImage(file="src/e.png")
 
 #Basic Labels and Buttons
 l1newdisk=Button(wndw,
@@ -67,8 +70,7 @@ l5=Label(wndw,
         text="añadir album",
         font="Verdana 15",
         background="black",
-        fg="#949494")
-l5.grid(row=1, column=0)         
+        fg="#949494").grid(row=1, column=0)         
 
 l6=Label(wndw,
         text="cambiar xml",
@@ -163,8 +165,9 @@ arrowL=Button(
 
 #more functions
 def changeDisksView():
-        global root, page, numDisks, list_d, list_n, list_p
+        global root, page, numDisks, list_d, list_n, list_p, visibleDisks
         position=page*6
+        visibleDisks=[page, page+1, page+2, page+3, page+4, page+5]
 
         nrow=4
         ncolumn=1
@@ -231,7 +234,7 @@ if(numDisks>6):
 
 #function for updating disks
 def changeXML():
-        global root, tree, filename, numDisks, page, arrowR
+        global root, tree, filename, numDisks, page, arrowR, l4file
         lastfilename=filename
         first_page()
         filename=filedialog.askopenfilename(title = "Select file",filetypes = (("XML Files","*.xml"),))
@@ -239,6 +242,8 @@ def changeXML():
                 filename=lastfilename
         tree = ET.parse(filename)
         root=tree.getroot()
+        f=open(filename, 'r')
+        l4file.configure(text="fichero: "+os.path.basename(f.name))
         numDisks=len(root)
         page=0
         if(numDisks>6):
@@ -247,7 +252,7 @@ def changeXML():
                 arrowR.grid_forget
         changeDisksView()                
 
-
+#returns to the first page to avoid bugs
 def first_page():
         global arrowL, page, numDisks, arrowR
         arrowL.grid_forget()
@@ -258,13 +263,146 @@ def first_page():
                 arrowR.grid_forget()        
         changeDisksView()
 
+#adding the command to the xml button
 l3xml.configure(
         command=changeXML
 )
 
-#obtain current year
+#obtain current year for using as default year on the disks
 currentDateTime = datetime.datetime.now()
 date = currentDateTime.date()
 year = date.strftime("%Y")
+
+#creates a new window asking the information about the new album
+def windowNewAlbum():
+        #images
+        global electronic_icon
+
+        newAlbumwndw = Toplevel(wndw)
+        newAlbumwndw.title("Crea aquí tu nuevo disco!!!")
+        newAlbumwndw.geometry("870x870")
+        newAlbumwndw['bg']='black'
+        
+        Label(
+                newAlbumwndw,
+                text="A",
+                font="Verdana 100",
+                background="black",
+                fg="black"
+        ).grid(row=0, column=0)
+
+        Label(
+                newAlbumwndw,
+                text="Crea tu nuevo álbum",
+                font="Verdana 40",
+                background="black",
+                fg="#00bf36"  
+        ).grid(row=0, column=1, columnspan=4)
+        
+        Label(
+                newAlbumwndw,
+                text="Nombre :",
+                font="Verdana 20",
+                background="black",
+                fg="#00bf36"
+        ).grid(row=1, column=1)
+
+        Label(
+                newAlbumwndw,
+                text="Artista :",
+                font="Verdana 20",
+                background="black",
+                fg="#00bf36"
+        ).grid(row=2, column=1)
+
+        Label(
+                newAlbumwndw,
+                text="Géneros :",
+                font="Verdana 20",
+                background="black",
+                fg="#00bf36"
+        ).grid(row=3, column=1)
+
+        bok=Button(
+                newAlbumwndw,
+                text="Crear",
+                font="Verdana 20",
+                background="#00bf36"
+        ).grid(row=6, column=1)
+
+        bCancel=Button(
+                newAlbumwndw,
+                text="Cancelar",
+                font="Verdana 20",
+                background="grey"
+        ).grid(row=6, column=4)
+
+        #genres
+        bElectronic=Button(
+                newAlbumwndw,
+                background="black",
+                width=100,
+                height=100,
+                image=electronic_icon
+        ).grid(column=1, row=4)
+
+        bRock=Button(
+                newAlbumwndw,
+                background="black",
+                width=100,
+                height=100,
+                image=electronic_icon
+        ).grid(column=2, row=4)
+
+        bJazz=Button(
+                newAlbumwndw,
+                background="black",
+                width=100,
+                height=100,
+                image=electronic_icon
+        ).grid(column=3, row=4)
+
+        bPop=Button(
+                newAlbumwndw,
+                background="black",
+                width=100,
+                height=100,
+                image=electronic_icon
+        ).grid(column=4, row=4)
+
+        bClassic=Button(
+                newAlbumwndw,
+                background="black",
+                width=100,
+                height=100,
+                image=electronic_icon
+        ).grid(column=1, row=5)
+
+        bReggaeton=Button(
+                newAlbumwndw,
+                background="black",
+                width=100,
+                height=100,
+                image=electronic_icon
+        ).grid(column=2, row=5)
+
+        bTrap=Button(
+                newAlbumwndw,
+                background="black",
+                width=100,
+                height=100,
+                image=electronic_icon
+        ).grid(column=3, row=5)
+
+        bOthers=Button(
+                newAlbumwndw,
+                background="black",
+                width=100,
+                height=100,
+                image=electronic_icon
+        ).grid(column=4, row=5)
+
+l1newdisk.configure(command=windowNewAlbum)    
+
 
 wndw.mainloop()
