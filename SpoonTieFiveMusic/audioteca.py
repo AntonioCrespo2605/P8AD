@@ -28,6 +28,13 @@ arrow_icon=PhotoImage(file = "src/flecha.png")
 arrowLeft_icon=PhotoImage(file="src/flechaizq.png")
 delete_icon=PhotoImage(file="src/borrar.png")
 electronic_icon=PhotoImage(file="src/e.png")
+rock_icon=PhotoImage(file="src/r.png")
+jazz_icon=PhotoImage(file="src/jazz.png")
+pop_icon=PhotoImage(file="src/pop.png")
+classic_icon=PhotoImage(file="src/pop.png")
+reggaeton_icon=PhotoImage(file="src/pop.png")
+trap_icon=PhotoImage(file="src/pop.png")
+other_icon=PhotoImage(file="src/pop.png")
 
 #Basic Labels and Buttons
 l1newdisk=Button(wndw,
@@ -276,7 +283,7 @@ year = date.strftime("%Y")
 #creates a new window asking the information about the new album
 def windowNewAlbum():
         #images
-        global electronic_icon
+        global electronic_icon, rock_icon, jazz_icon, pop_icon, classic_icon, reggaeton_icon, trap_icon, other_icon
 
         newAlbumwndw = Toplevel(wndw)
         newAlbumwndw.title("Crea aquí tu nuevo disco!!!")
@@ -351,7 +358,7 @@ def windowNewAlbum():
                 background="black",
                 width=100,
                 height=100,
-                image=electronic_icon
+                image=rock_icon
         ).grid(column=2, row=4)
 
         bJazz=Button(
@@ -359,7 +366,7 @@ def windowNewAlbum():
                 background="black",
                 width=100,
                 height=100,
-                image=electronic_icon
+                image=jazz_icon
         ).grid(column=3, row=4)
 
         bPop=Button(
@@ -367,7 +374,7 @@ def windowNewAlbum():
                 background="black",
                 width=100,
                 height=100,
-                image=electronic_icon
+                image=pop_icon
         ).grid(column=4, row=4)
 
         bClassic=Button(
@@ -375,7 +382,7 @@ def windowNewAlbum():
                 background="black",
                 width=100,
                 height=100,
-                image=electronic_icon
+                image=classic_icon
         ).grid(column=1, row=5)
 
         bReggaeton=Button(
@@ -383,7 +390,7 @@ def windowNewAlbum():
                 background="black",
                 width=100,
                 height=100,
-                image=electronic_icon
+                image=reggaeton_icon
         ).grid(column=2, row=5)
 
         bTrap=Button(
@@ -391,7 +398,7 @@ def windowNewAlbum():
                 background="black",
                 width=100,
                 height=100,
-                image=electronic_icon
+                image=trap_icon
         ).grid(column=3, row=5)
 
         bOthers=Button(
@@ -399,7 +406,7 @@ def windowNewAlbum():
                 background="black",
                 width=100,
                 height=100,
-                image=electronic_icon
+                image=other_icon
         ).grid(column=4, row=5)
 
 l1newdisk.configure(command=windowNewAlbum)    
