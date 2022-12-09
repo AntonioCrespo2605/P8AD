@@ -16,33 +16,34 @@ filename="MusicaXML/audioteca.xml"
 wndw=Tk()
 wndw['bg']="black"
 wndw.title("SpoonTieFive")
-app_icon=PhotoImage(file="src/icono.png")
+app_icon=PhotoImage(file="src/proyect_images/icono.png")
 wndw.iconphoto(True,app_icon)
 wndw.geometry("870x1000")
 
 #Images
-icon_new = PhotoImage(file = "src/anhadirverde2.png")
-icon_change_green=PhotoImage(file = "src/cambiarverde2.png")
-icon_cd=PhotoImage(file = "src/disco.png")
-arrow_icon=PhotoImage(file = "src/flecha.png")
-arrowLeft_icon=PhotoImage(file="src/flechaizq.png")
-delete_icon=PhotoImage(file="src/borrar.png")
-electronic_icon=PhotoImage(file="src/e.png")
-electronic_black=PhotoImage(file="src/ebn.png")
-rock_icon=PhotoImage(file="src/r.png")
-rock_black=PhotoImage(file="src/rbn.png")
-jazz_icon=PhotoImage(file="src/jazz.png")
-jazz_black=PhotoImage(file="src/jazzbn.png")
-pop_icon=PhotoImage(file="src/pop.png")
-pop_black=PhotoImage(file="src/popbn.png")
-classic_icon=PhotoImage(file="src/clasica.png")
-classic_black=PhotoImage(file="src/clasicabn.png")
-reggaeton_icon=PhotoImage(file="src/reggaeton.png")
-reggaeton_black=PhotoImage(file="src/reggaetonbn.png")
-trap_icon=PhotoImage(file="src/trap.png")
-trap_black=PhotoImage(file="src/trapbn.png")
-other_icon=PhotoImage(file="src/otros.png")
-other_black=PhotoImage(file="src/otrosbn.png")
+icon_new = PhotoImage(file = "src/proyect_images/anhadirverde2.png")
+icon_change_green=PhotoImage(file = "src/proyect_images/cambiarverde2.png")
+icon_cd=PhotoImage(file = "src/proyect_images/disco.png")
+arrow_icon=PhotoImage(file = "src/proyect_images/flecha.png")
+arrowLeft_icon=PhotoImage(file="src/proyect_images/flechaizq.png")
+delete_icon=PhotoImage(file="src/proyect_images/borrar.png")
+electronic_icon=PhotoImage(file="src/proyect_images/e.png")
+electronic_black=PhotoImage(file="src/proyect_images/ebn.png")
+rock_icon=PhotoImage(file="src/proyect_images/r.png")
+rock_black=PhotoImage(file="src/proyect_images/rbn.png")
+jazz_icon=PhotoImage(file="src/proyect_images/jazz.png")
+jazz_black=PhotoImage(file="src/proyect_images/jazzbn.png")
+pop_icon=PhotoImage(file="src/proyect_images/pop.png")
+pop_black=PhotoImage(file="src/proyect_images/popbn.png")
+classic_icon=PhotoImage(file="src/proyect_images/clasica.png")
+classic_black=PhotoImage(file="src/proyect_images/clasicabn.png")
+reggaeton_icon=PhotoImage(file="src/proyect_images/reggaeton.png")
+reggaeton_black=PhotoImage(file="src/proyect_images/reggaetonbn.png")
+trap_icon=PhotoImage(file="src/proyect_images/trap.png")
+trap_black=PhotoImage(file="src/proyect_images/trapbn.png")
+other_icon=PhotoImage(file="src/proyect_images/otros.png")
+other_black=PhotoImage(file="src/proyect_images/otrosbn.png")
+add_artist_icon=PhotoImage(file="src/proyect_images/nuevoartista2.png")
 
 #Basic Labels and Buttons
 l1newdisk=Button(wndw,
@@ -82,7 +83,7 @@ l4_2=Label(
 ).grid(row=2, column=0 )
 
 l5=Label(wndw,
-        text="añadir album",
+        text="añadir disco",
         font="Verdana 15",
         background="black",
         fg="#949494").grid(row=1, column=0)         
@@ -91,7 +92,7 @@ l6=Label(wndw,
         text="cambiar xml",
         font="Verdana 15",
         background="black",
-        fg="#949494").grid(row=1, column=3)                       
+        fg="#949494").grid(row=1, column=3)               
 
 l7=Label(
         wndw,
@@ -292,13 +293,15 @@ year = date.strftime("%Y")
 def windowNewAlbum():
 
         #images
-        global electronic_black, rock_black, jazz_black, pop_black, classic_black, reggaeton_black, trap_black, other_black
+        global electronic_black, rock_black, jazz_black, pop_black, classic_black, reggaeton_black, trap_black, other_black, add_artist_icon
 
+        #add album main interface
         newAlbumwndw = Toplevel(wndw)
         newAlbumwndw.title("Crea aquí tu nuevo disco!!!")
         newAlbumwndw.geometry("870x870")
         newAlbumwndw['bg']='black'
         
+        #
         Label(
                 newAlbumwndw,
                 text="A",
@@ -309,7 +312,7 @@ def windowNewAlbum():
 
         Label(
                 newAlbumwndw,
-                text="Crea tu nuevo álbum",
+                text="Crea tu nuevo disco",
                 font="Verdana 40",
                 background="black",
                 fg="#00bf36"  
@@ -323,6 +326,14 @@ def windowNewAlbum():
                 fg="#00bf36"
         ).grid(row=1, column=1)
 
+        inputname = Text(newAlbumwndw,
+                        height = 1,
+                        width = 15,
+                        font="Verdana 30"
+                        )
+  
+        inputname.grid(row=1, column=2, columnspan=3, pady=10, padx=10, sticky="w")
+
         Label(
                 newAlbumwndw,
                 text="Artista :",
@@ -333,28 +344,64 @@ def windowNewAlbum():
 
         Label(
                 newAlbumwndw,
+                text="Artistas :",
+                font="Verdana 20",
+                background="black",
+                fg="#00bf36"
+        ).grid(row=3, column=1, pady=15)
+
+        artists=Label(
+                newAlbumwndw,
+                font="Verdana 20",
+                background="black",
+                fg="#00bf36"
+        )
+
+        artists.grid(row=3, column=2, columnspan=3)
+
+        inputartist = Text(newAlbumwndw,
+                        height = 1,
+                        width = 10,
+                        font="Verdana 30"
+                        )
+  
+        inputartist.grid(row=2, column=2, columnspan=2, pady=10, padx=10, sticky="w")
+
+        add_artist=Button(
+                newAlbumwndw,
+                width=30,
+                height=30,
+                image=add_artist_icon,
+                background="black"
+        )
+
+        add_artist.grid(row=2, column=4)
+
+        Label(
+                newAlbumwndw,
                 text="Géneros :",
                 font="Verdana 20",
                 background="black",
                 fg="#00bf36"
-        ).grid(row=3, column=1)
+        ).grid(row=4, column=1, pady=15)
 
         bok=Button(
                 newAlbumwndw,
                 text="Crear",
                 font="Verdana 20",
                 background="#00bf36"
-        ).grid(row=6, column=1)
+        ).grid(row=7, column=1)
 
-        bCancel=Button(
+        Button(
                 newAlbumwndw,
                 text="Cancelar",
                 font="Verdana 20",
-                background="grey"
-        ).grid(row=6, column=4, pady=15)
+                background="grey",
+                command= lambda: newAlbumwndw.destroy()
+        ).grid(row=7, column=4, pady=15)
 
 
-        #genres
+        #genres buttons and names
         bElectronic=Button(
                 newAlbumwndw,
                 background="black",
@@ -362,7 +409,7 @@ def windowNewAlbum():
                 height=100,
                 image=electronic_black
         )
-        bElectronic.grid(column=1, row=4, pady=30, padx=15)
+        bElectronic.grid(column=1, row=5, pady=30, padx=15)
 
         Label(
                 newAlbumwndw,
@@ -370,7 +417,7 @@ def windowNewAlbum():
                 text="Electrónica",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=1, row=4, sticky="s", pady=20)
+        ).grid(column=1, row=5, sticky="s", pady=20)
 
         bRock=Button(
                 newAlbumwndw,
@@ -379,7 +426,7 @@ def windowNewAlbum():
                 height=100,
                 image=rock_black
         )
-        bRock.grid(column=2, row=4, padx=15)
+        bRock.grid(column=2, row=5, padx=15)
 
         Label(
                 newAlbumwndw,
@@ -387,7 +434,7 @@ def windowNewAlbum():
                 text="Rock",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=2, row=4, sticky="s", pady=20)
+        ).grid(column=2, row=5, sticky="s", pady=20)
 
         bJazz=Button(
                 newAlbumwndw,
@@ -396,7 +443,7 @@ def windowNewAlbum():
                 height=100,
                 image=jazz_black
         )
-        bJazz.grid(column=3, row=4, padx=15)
+        bJazz.grid(column=3, row=5, padx=15)
 
         Label(
                 newAlbumwndw,
@@ -404,7 +451,7 @@ def windowNewAlbum():
                 text="Jazz",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=3, row=4, sticky="s", pady=20)
+        ).grid(column=3, row=5, sticky="s", pady=20)
 
         bPop=Button(
                 newAlbumwndw,
@@ -413,7 +460,7 @@ def windowNewAlbum():
                 height=100,
                 image=pop_black
         )
-        bPop.grid(column=4, row=4, padx=15)
+        bPop.grid(column=4, row=5, padx=15)
 
         Label(
                 newAlbumwndw,
@@ -421,7 +468,7 @@ def windowNewAlbum():
                 text="Pop",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=4, row=4, sticky="s", pady=20)
+        ).grid(column=4, row=5, sticky="s", pady=20)
 
         bClassic=Button(
                 newAlbumwndw,
@@ -430,7 +477,7 @@ def windowNewAlbum():
                 height=100,
                 image=classic_black
         )
-        bClassic.grid(column=1, row=5, padx=15, pady=15)
+        bClassic.grid(column=1, row=6, padx=15, pady=15)
 
         Label(
                 newAlbumwndw,
@@ -438,7 +485,7 @@ def windowNewAlbum():
                 text="Clásica",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=1, row=5, sticky="s")
+        ).grid(column=1, row=6, sticky="s")
 
         bReggaeton=Button(
                 newAlbumwndw,
@@ -447,7 +494,7 @@ def windowNewAlbum():
                 height=100,
                 image=reggaeton_black
         )
-        bReggaeton.grid(column=2, row=5, padx=15)
+        bReggaeton.grid(column=2, row=6, padx=15)
 
         Label(
                 newAlbumwndw,
@@ -455,7 +502,7 @@ def windowNewAlbum():
                 text="Reggaeton",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=2, row=5, sticky="s")
+        ).grid(column=2, row=6, sticky="s")
 
         bTrap=Button(
                 newAlbumwndw,
@@ -464,7 +511,7 @@ def windowNewAlbum():
                 height=100,
                 image=trap_black
         )
-        bTrap.grid(column=3, row=5, padx=15)
+        bTrap.grid(column=3, row=6, padx=15)
 
         Label(
                 newAlbumwndw,
@@ -472,7 +519,7 @@ def windowNewAlbum():
                 text="Trap",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=3, row=5, sticky="s")
+        ).grid(column=3, row=6, sticky="s")
 
         bOthers=Button(
                 newAlbumwndw,
@@ -481,7 +528,7 @@ def windowNewAlbum():
                 height=100,
                 image=other_black
         )
-        bOthers.grid(column=4, row=5, padx=15)
+        bOthers.grid(column=4, row=6, padx=15)
 
         Label(
                 newAlbumwndw,
@@ -489,7 +536,7 @@ def windowNewAlbum():
                 text="Otros",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=4, row=5, sticky="s")
+        ).grid(column=4, row=6, sticky="s")
 
         genres_selected={}
         genres_selected["electronic"]=[False]
@@ -500,6 +547,11 @@ def windowNewAlbum():
         genres_selected["reggaeton"]=[False]
         genres_selected["trap"]=[False]
         genres_selected["others"]=[False]
+
+        #functions
+        artistsnames={}
+        def addArtistToList():
+                add_artist
 
         def select_deselect(key):
                 
@@ -563,6 +615,8 @@ def windowNewAlbum():
         bReggaeton.configure(command= lambda: select_deselect("reggaeton"))
         bTrap.configure(command= lambda: select_deselect("trap"))
         bOthers.configure(command= lambda: select_deselect("others"))                        
+
+
 
 
 l1newdisk.configure(command=windowNewAlbum)    

@@ -8,15 +8,13 @@ filename="MusicaXML/audioteca2.xml"
 tree = ET.parse(filename)
 root=tree.getroot()
 
-
-
 currentDateTime = datetime.datetime.now()
 date = currentDateTime.date()
 year = date.strftime("%Y")
 print(year)
 
+root[0].set("anho",year)
+
+tree.write(filename)
 
 
-root.append()
-fichero=ET.ElementTree(root)
-fichero.write(filename)
