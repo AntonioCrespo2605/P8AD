@@ -28,13 +28,21 @@ arrow_icon=PhotoImage(file = "src/flecha.png")
 arrowLeft_icon=PhotoImage(file="src/flechaizq.png")
 delete_icon=PhotoImage(file="src/borrar.png")
 electronic_icon=PhotoImage(file="src/e.png")
+electronic_black=PhotoImage(file="src/ebn.png")
 rock_icon=PhotoImage(file="src/r.png")
+rock_black=PhotoImage(file="src/rbn.png")
 jazz_icon=PhotoImage(file="src/jazz.png")
+jazz_black=PhotoImage(file="src/jazzbn.png")
 pop_icon=PhotoImage(file="src/pop.png")
-classic_icon=PhotoImage(file="src/pop.png")
-reggaeton_icon=PhotoImage(file="src/pop.png")
-trap_icon=PhotoImage(file="src/pop.png")
-other_icon=PhotoImage(file="src/pop.png")
+pop_black=PhotoImage(file="src/popbn.png")
+classic_icon=PhotoImage(file="src/clasica.png")
+classic_black=PhotoImage(file="src/clasicabn.png")
+reggaeton_icon=PhotoImage(file="src/reggaeton.png")
+reggaeton_black=PhotoImage(file="src/reggaetonbn.png")
+trap_icon=PhotoImage(file="src/trap.png")
+trap_black=PhotoImage(file="src/trapbn.png")
+other_icon=PhotoImage(file="src/otros.png")
+other_black=PhotoImage(file="src/otrosbn.png")
 
 #Basic Labels and Buttons
 l1newdisk=Button(wndw,
@@ -282,8 +290,9 @@ year = date.strftime("%Y")
 
 #creates a new window asking the information about the new album
 def windowNewAlbum():
+
         #images
-        global electronic_icon, rock_icon, jazz_icon, pop_icon, classic_icon, reggaeton_icon, trap_icon, other_icon
+        global electronic_black, rock_black, jazz_black, pop_black, classic_black, reggaeton_black, trap_black, other_black
 
         newAlbumwndw = Toplevel(wndw)
         newAlbumwndw.title("Crea aquí tu nuevo disco!!!")
@@ -342,7 +351,8 @@ def windowNewAlbum():
                 text="Cancelar",
                 font="Verdana 20",
                 background="grey"
-        ).grid(row=6, column=4)
+        ).grid(row=6, column=4, pady=15)
+
 
         #genres
         bElectronic=Button(
@@ -350,64 +360,210 @@ def windowNewAlbum():
                 background="black",
                 width=100,
                 height=100,
-                image=electronic_icon
-        ).grid(column=1, row=4)
+                image=electronic_black
+        )
+        bElectronic.grid(column=1, row=4, pady=30, padx=15)
+
+        Label(
+                newAlbumwndw,
+                background="black",
+                text="Electrónica",
+                fg="#00bf36",
+                font="Verdana 10"
+        ).grid(column=1, row=4, sticky="s", pady=20)
 
         bRock=Button(
                 newAlbumwndw,
                 background="black",
                 width=100,
                 height=100,
-                image=rock_icon
-        ).grid(column=2, row=4)
+                image=rock_black
+        )
+        bRock.grid(column=2, row=4, padx=15)
+
+        Label(
+                newAlbumwndw,
+                background="black",
+                text="Rock",
+                fg="#00bf36",
+                font="Verdana 10"
+        ).grid(column=2, row=4, sticky="s", pady=20)
 
         bJazz=Button(
                 newAlbumwndw,
                 background="black",
                 width=100,
                 height=100,
-                image=jazz_icon
-        ).grid(column=3, row=4)
+                image=jazz_black
+        )
+        bJazz.grid(column=3, row=4, padx=15)
+
+        Label(
+                newAlbumwndw,
+                background="black",
+                text="Jazz",
+                fg="#00bf36",
+                font="Verdana 10"
+        ).grid(column=3, row=4, sticky="s", pady=20)
 
         bPop=Button(
                 newAlbumwndw,
                 background="black",
                 width=100,
                 height=100,
-                image=pop_icon
-        ).grid(column=4, row=4)
+                image=pop_black
+        )
+        bPop.grid(column=4, row=4, padx=15)
+
+        Label(
+                newAlbumwndw,
+                background="black",
+                text="Pop",
+                fg="#00bf36",
+                font="Verdana 10"
+        ).grid(column=4, row=4, sticky="s", pady=20)
 
         bClassic=Button(
                 newAlbumwndw,
                 background="black",
                 width=100,
                 height=100,
-                image=classic_icon
-        ).grid(column=1, row=5)
+                image=classic_black
+        )
+        bClassic.grid(column=1, row=5, padx=15, pady=15)
+
+        Label(
+                newAlbumwndw,
+                background="black",
+                text="Clásica",
+                fg="#00bf36",
+                font="Verdana 10"
+        ).grid(column=1, row=5, sticky="s")
 
         bReggaeton=Button(
                 newAlbumwndw,
                 background="black",
                 width=100,
                 height=100,
-                image=reggaeton_icon
-        ).grid(column=2, row=5)
+                image=reggaeton_black
+        )
+        bReggaeton.grid(column=2, row=5, padx=15)
+
+        Label(
+                newAlbumwndw,
+                background="black",
+                text="Reggaeton",
+                fg="#00bf36",
+                font="Verdana 10"
+        ).grid(column=2, row=5, sticky="s")
 
         bTrap=Button(
                 newAlbumwndw,
                 background="black",
                 width=100,
                 height=100,
-                image=trap_icon
-        ).grid(column=3, row=5)
+                image=trap_black
+        )
+        bTrap.grid(column=3, row=5, padx=15)
+
+        Label(
+                newAlbumwndw,
+                background="black",
+                text="Trap",
+                fg="#00bf36",
+                font="Verdana 10"
+        ).grid(column=3, row=5, sticky="s")
 
         bOthers=Button(
                 newAlbumwndw,
                 background="black",
                 width=100,
                 height=100,
-                image=other_icon
-        ).grid(column=4, row=5)
+                image=other_black
+        )
+        bOthers.grid(column=4, row=5, padx=15)
+
+        Label(
+                newAlbumwndw,
+                background="black",
+                text="Otros",
+                fg="#00bf36",
+                font="Verdana 10"
+        ).grid(column=4, row=5, sticky="s")
+
+        genres_selected={}
+        genres_selected["electronic"]=[False]
+        genres_selected["rock"]=[False]
+        genres_selected["jazz"]=[False]
+        genres_selected["pop"]=[False]
+        genres_selected["classic"]=[False]
+        genres_selected["reggaeton"]=[False]
+        genres_selected["trap"]=[False]
+        genres_selected["others"]=[False]
+
+        def select_deselect(key):
+                
+                global electronic_icon, electronic_black, rock_icon, rock_black, jazz_icon, jazz_black, pop_icon, pop_black, classic_icon, classic_black, reggaeton_icon, reggaeton_black, trap_icon, trap_black, other_icon, other_black
+                if(genres_selected[key]==True):
+                        if(key=="electronic"):
+                                bElectronic.configure(image=electronic_black)
+                                genres_selected[key]=False
+                        elif(key=="rock"):
+                                bRock.configure(image=rock_black)
+                                genres_selected[key]=False
+                        elif(key=="pop"):
+                                bPop.configure(image=pop_black)
+                                genres_selected[key]=False
+                        elif(key=="jazz"):
+                                bJazz.configure(image=jazz_black)
+                                genres_selected[key]=False
+                        elif(key=="classic"):
+                                bClassic.configure(image=classic_black)
+                                genres_selected[key]=False
+                        elif(key=="reggaeton"):
+                                bReggaeton.configure(image=reggaeton_black)
+                                genres_selected[key]=False
+                        elif(key=="trap"):
+                                bTrap.configure(image=trap_black)
+                                genres_selected[key]=False
+                        elif(key=="others"):
+                                bOthers.configure(image=other_black)
+                                genres_selected[key]=False                                                        
+                else:
+                        if(key=="electronic"):
+                                bElectronic.configure(image=electronic_icon)
+                                genres_selected[key]=True        
+                        elif(key=="rock"):
+                                bRock.configure(image=rock_icon)
+                                genres_selected[key]=True
+                        elif(key=="pop"):
+                                bPop.configure(image=pop_icon)
+                                genres_selected[key]=True
+                        elif(key=="jazz"):
+                                bJazz.configure(image=jazz_icon)
+                                genres_selected[key]=True
+                        elif(key=="classic"):
+                                bClassic.configure(image=classic_icon)
+                                genres_selected[key]=True
+                        elif(key=="reggaeton"):
+                                bReggaeton.configure(image=reggaeton_icon)
+                                genres_selected[key]=True
+                        elif(key=="trap"):
+                                bTrap.configure(image=trap_icon)
+                                genres_selected[key]=True
+                        elif(key=="others"):
+                                bOthers.configure(image=other_icon)
+                                genres_selected[key]=True 
+        
+        bElectronic.configure(command= lambda : select_deselect("electronic"))
+        bRock.configure(command= lambda: select_deselect("rock"))
+        bPop.configure(command= lambda: select_deselect("pop"))
+        bJazz.configure(command= lambda: select_deselect("jazz"))
+        bClassic.configure(command= lambda: select_deselect("classic"))
+        bReggaeton.configure(command= lambda: select_deselect("reggaeton"))
+        bTrap.configure(command= lambda: select_deselect("trap"))
+        bOthers.configure(command= lambda: select_deselect("others"))                        
+
 
 l1newdisk.configure(command=windowNewAlbum)    
 
