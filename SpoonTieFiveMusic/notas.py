@@ -4,17 +4,14 @@ from tkinter import ttk
 from tkinter.filedialog import askopenfilename
 import datetime
 
-filename="MusicaXML/audioteca2.xml"
+filename="MusicaXML/audioteca.xml"
 tree = ET.parse(filename)
 root=tree.getroot()
 
-currentDateTime = datetime.datetime.now()
-date = currentDateTime.date()
-year = date.strftime("%Y")
-print(year)
 
-root[0].set("anho",year)
+for cancion in root[0].iter('artista'):
+    print(cancion.text)
 
-tree.write(filename)
+
 
 

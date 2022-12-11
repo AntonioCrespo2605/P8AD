@@ -44,6 +44,9 @@ trap_black=PhotoImage(file="src/proyect_images/trapbn.png")
 other_icon=PhotoImage(file="src/proyect_images/otros.png")
 other_black=PhotoImage(file="src/proyect_images/otrosbn.png")
 add_artist_icon=PhotoImage(file="src/proyect_images/nuevoartista2.png")
+edit_icon=PhotoImage(file="src/proyect_images/editarpeque.png")
+more_artists_icon=PhotoImage(file="src/proyect_images/tresp.png")
+more_songs_icon=PhotoImage(file="src/proyect_images/mas.png")
 
 #Basic Labels and Buttons
 l1newdisk=Button(wndw,
@@ -265,8 +268,15 @@ def changeXML():
         if(numDisks>6):
                 arrowR.grid(row=7, column=2)
         else:
-                arrowR.grid_forget
+                arrowR.grid_forget()
         changeDisksView()                
+
+#reads againg the xml file
+def readXML():
+        global tree, root, numDisks
+        tree = ET.parse(filename)
+        root=tree.getroot()
+        numDisks=len(root)
 
 #returns to the first page to avoid bugs
 def first_page():
@@ -289,6 +299,10 @@ currentDateTime = datetime.datetime.now()
 date = currentDateTime.date()
 year = date.strftime("%Y")
 
+"""
+Disco Creator interface and code:
+***********************************************************************************************************************************************
+"""
 #creates a new window asking the information about the new album
 def windowNewAlbum():
 
@@ -298,10 +312,10 @@ def windowNewAlbum():
         #add album main interface
         newAlbumwndw = Toplevel(wndw)
         newAlbumwndw.title("Crea aquí tu nuevo disco!!!")
-        newAlbumwndw.geometry("870x870")
+        newAlbumwndw.geometry("840x900")
         newAlbumwndw['bg']='black'
         
-        #
+        #labels and texts
         Label(
                 newAlbumwndw,
                 text="A",
@@ -357,7 +371,7 @@ def windowNewAlbum():
                 fg="#00bf36"
         )
 
-        artists.grid(row=3, column=2, columnspan=3)
+        artists.grid(row=3, column=2, columnspan=3, sticky="w")
 
         inputartist = Text(newAlbumwndw,
                         height = 1,
@@ -379,18 +393,35 @@ def windowNewAlbum():
 
         Label(
                 newAlbumwndw,
-                text="Géneros :",
+                text="Año :",
                 font="Verdana 20",
                 background="black",
                 fg="#00bf36"
         ).grid(row=4, column=1, pady=15)
 
+        inputyear = Text(newAlbumwndw,
+                        height = 1,
+                        width = 10,
+                        font="Verdana 30"
+                        )
+        inputyear.grid(row=4, column=2, columnspan=2, sticky="w")                
+
+        Label(
+                newAlbumwndw,
+                text="Géneros :",
+                font="Verdana 20",
+                background="black",
+                fg="#00bf36"
+        ).grid(row=5, column=1, pady=15)
+
+        #Ok adn Cancel buttons
         bok=Button(
                 newAlbumwndw,
                 text="Crear",
                 font="Verdana 20",
                 background="#00bf36"
-        ).grid(row=7, column=1)
+        )
+        bok.grid(row=8, column=1)
 
         Button(
                 newAlbumwndw,
@@ -398,7 +429,7 @@ def windowNewAlbum():
                 font="Verdana 20",
                 background="grey",
                 command= lambda: newAlbumwndw.destroy()
-        ).grid(row=7, column=4, pady=15)
+        ).grid(row=8, column=4, pady=15)
 
 
         #genres buttons and names
@@ -409,7 +440,7 @@ def windowNewAlbum():
                 height=100,
                 image=electronic_black
         )
-        bElectronic.grid(column=1, row=5, pady=30, padx=15)
+        bElectronic.grid(column=1, row=6, pady=30, padx=15)
 
         Label(
                 newAlbumwndw,
@@ -417,7 +448,7 @@ def windowNewAlbum():
                 text="Electrónica",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=1, row=5, sticky="s", pady=20)
+        ).grid(column=1, row=6, sticky="s", pady=20)
 
         bRock=Button(
                 newAlbumwndw,
@@ -426,7 +457,7 @@ def windowNewAlbum():
                 height=100,
                 image=rock_black
         )
-        bRock.grid(column=2, row=5, padx=15)
+        bRock.grid(column=2, row=6, padx=15)
 
         Label(
                 newAlbumwndw,
@@ -434,7 +465,7 @@ def windowNewAlbum():
                 text="Rock",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=2, row=5, sticky="s", pady=20)
+        ).grid(column=2, row=6, sticky="s", pady=20)
 
         bJazz=Button(
                 newAlbumwndw,
@@ -443,7 +474,7 @@ def windowNewAlbum():
                 height=100,
                 image=jazz_black
         )
-        bJazz.grid(column=3, row=5, padx=15)
+        bJazz.grid(column=3, row=6, padx=15)
 
         Label(
                 newAlbumwndw,
@@ -451,7 +482,7 @@ def windowNewAlbum():
                 text="Jazz",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=3, row=5, sticky="s", pady=20)
+        ).grid(column=3, row=6, sticky="s", pady=20)
 
         bPop=Button(
                 newAlbumwndw,
@@ -460,7 +491,7 @@ def windowNewAlbum():
                 height=100,
                 image=pop_black
         )
-        bPop.grid(column=4, row=5, padx=15)
+        bPop.grid(column=4, row=6, padx=15)
 
         Label(
                 newAlbumwndw,
@@ -468,7 +499,7 @@ def windowNewAlbum():
                 text="Pop",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=4, row=5, sticky="s", pady=20)
+        ).grid(column=4, row=6, sticky="s", pady=20)
 
         bClassic=Button(
                 newAlbumwndw,
@@ -477,7 +508,7 @@ def windowNewAlbum():
                 height=100,
                 image=classic_black
         )
-        bClassic.grid(column=1, row=6, padx=15, pady=15)
+        bClassic.grid(column=1, row=7, padx=15, pady=15)
 
         Label(
                 newAlbumwndw,
@@ -485,7 +516,7 @@ def windowNewAlbum():
                 text="Clásica",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=1, row=6, sticky="s")
+        ).grid(column=1, row=7, sticky="s")
 
         bReggaeton=Button(
                 newAlbumwndw,
@@ -494,7 +525,7 @@ def windowNewAlbum():
                 height=100,
                 image=reggaeton_black
         )
-        bReggaeton.grid(column=2, row=6, padx=15)
+        bReggaeton.grid(column=2, row=7, padx=15)
 
         Label(
                 newAlbumwndw,
@@ -502,7 +533,7 @@ def windowNewAlbum():
                 text="Reggaeton",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=2, row=6, sticky="s")
+        ).grid(column=2, row=7, sticky="s")
 
         bTrap=Button(
                 newAlbumwndw,
@@ -511,7 +542,7 @@ def windowNewAlbum():
                 height=100,
                 image=trap_black
         )
-        bTrap.grid(column=3, row=6, padx=15)
+        bTrap.grid(column=3, row=7, padx=15)
 
         Label(
                 newAlbumwndw,
@@ -519,7 +550,7 @@ def windowNewAlbum():
                 text="Trap",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=3, row=6, sticky="s")
+        ).grid(column=3, row=7, sticky="s")
 
         bOthers=Button(
                 newAlbumwndw,
@@ -528,7 +559,7 @@ def windowNewAlbum():
                 height=100,
                 image=other_black
         )
-        bOthers.grid(column=4, row=6, padx=15)
+        bOthers.grid(column=4, row=7, padx=15)
 
         Label(
                 newAlbumwndw,
@@ -536,8 +567,9 @@ def windowNewAlbum():
                 text="Otros",
                 fg="#00bf36",
                 font="Verdana 10"
-        ).grid(column=4, row=6, sticky="s")
+        ).grid(column=4, row=7, sticky="s")
 
+        #this is used for knowing which genres has been selected
         genres_selected={}
         genres_selected["electronic"]=[False]
         genres_selected["rock"]=[False]
@@ -549,10 +581,37 @@ def windowNewAlbum():
         genres_selected["others"]=[False]
 
         #functions
-        artistsnames={}
-        def addArtistToList():
-                add_artist
 
+        #when the add_button is clicked it gets the text in the artist input box and add it to the list
+        #it also cut the artists String if it is too long
+        artistsnames=[]
+        def addArtistToList():
+                current_artist=inputartist.get("1.0", "end-1c").strip()
+                if(current_artist != ''):
+                        artistsnames.append(current_artist)
+
+                artists_in_format=''
+                cont=1
+                for art in artistsnames:
+                        artists_in_format+=art
+                        if(cont!=len(artistsnames)):
+                                artists_in_format+=', '
+                        cont+=1
+
+                
+                if(len(artists_in_format)>20):
+                        artists_in_format_aux=''
+                        for x in range(17):
+                                artists_in_format_aux+=artists_in_format[x]
+                        artists_in_format_aux+='...'
+                        artists_in_format=artists_in_format_aux
+
+                artists.configure(text=artists_in_format)                
+
+        #calling the last function in the add_artist button
+        add_artist.config(command=addArtistToList)
+
+        #changes the genres images alternating between bright and dark for each one
         def select_deselect(key):
                 
                 global electronic_icon, electronic_black, rock_icon, rock_black, jazz_icon, jazz_black, pop_icon, pop_black, classic_icon, classic_black, reggaeton_icon, reggaeton_black, trap_icon, trap_black, other_icon, other_black
@@ -607,6 +666,7 @@ def windowNewAlbum():
                                 bOthers.configure(image=other_icon)
                                 genres_selected[key]=True 
         
+        #calling the select_deselect function for each genre button
         bElectronic.configure(command= lambda : select_deselect("electronic"))
         bRock.configure(command= lambda: select_deselect("rock"))
         bPop.configure(command= lambda: select_deselect("pop"))
@@ -614,12 +674,388 @@ def windowNewAlbum():
         bClassic.configure(command= lambda: select_deselect("classic"))
         bReggaeton.configure(command= lambda: select_deselect("reggaeton"))
         bTrap.configure(command= lambda: select_deselect("trap"))
-        bOthers.configure(command= lambda: select_deselect("others"))                        
+        bOthers.configure(command= lambda: select_deselect("others"))
+
+        #it opens a new window with errors 
+        def errorWindow(message):
+                errorwndw = Toplevel(newAlbumwndw)
+                errorwndw.title("ERROR")
+                errorwndw.geometry("870x250")
+                errorwndw['bg']='black'
+                Label(
+                        errorwndw,
+                        text="Se han detectado los siguientes errores:",
+                        font="Verdana 25",
+                        background="black",
+                        fg="red"
+                ).grid(row=0, column=0)
+
+                Label(
+                        errorwndw,
+                        text=message,
+                        font="Verdana 12",
+                        background="black",
+                        fg="white"
+                ).grid(row=1, column=0)
+
+                Button(
+                        errorwndw,
+                        text="Aceptar",
+                        background="#00bf36",
+                        command= lambda: errorwndw.destroy()
+                ).grid(row=2, column=0, pady=20)
+
+        def successfullDisk():
+                readXML()
+                first_page()
+                changeDisksView()
+                swndw = Toplevel(newAlbumwndw)
+                swndw.title("Creado con éxito")
+                swndw.geometry("580x300")
+                swndw['bg']='black'
+                Label(
+                        swndw,
+                        text="Tu disco se ha creado con éxito:",
+                        font="Verdana 25",
+                        background="black",
+                        fg="#00bf36"
+                ).grid(row=0, column=0)
+
+                Label(
+                        swndw,
+                        text="Puedes empezar a añadir canciones a \ntu disco desde el menú principal",
+                        font="Verdana 12",
+                        background="black",
+                        fg="#00bf36"
+                ).grid(row=1, column=0, pady=40)
+
+                Button(
+                        swndw,
+                        text="Aceptar",
+                        background="#00bf36",
+                        command= lambda: swndw.destroy()
+                ).grid(row=2, column=0, pady=20)
+
+        #obtaining current Year
+        currentDateTime = datetime.datetime.now()
+        date = currentDateTime.date()
+        year = date.strftime("%Y")
+
+        #when the create button is clicked it checks all the data and creates a new disk in the xml
+        def diskCreator():
+                allOk=True
+                errorMessage=''
+                if(len(artistsnames)==0):
+                        errorMessage+="\n*El nuevo disco tiene que tener algún artista asociado."
+                        allOk=False
+
+                year_aux=inputyear.get("1.0", "end-1c")        
+                
+                if(year_aux.isnumeric()):
+                        if(int(year_aux)>int(year) or int(year_aux)<0 ):
+                                errorMessage+="\n*El año debe ser un entero entre 0 y "+str(year)
+                else:
+                        errorMessage+="\n*El año no se corresponde con un número entero. Comprueba que se trata de un entero entre 0 y "+str(year)
+                        allOk=False                
+
+                disk_name_aux=inputname.get("1.0", "end-1c").strip()
+                if(len(disk_name_aux)==0):
+                        errorMessage+="\n*El disco debe tener un nombre asociado"
+                        allOk=False
+
+                anyGenreSelected=False
+                
+                for g in genres_selected:
+                        if(genres_selected[g]==True):
+                                anyGenreSelected=True
+                                break
+
+                if(anyGenreSelected==False):
+                        errorMessage+="\n*El disco debe tener asociado al menos un género musical"
+                        allOk=False
+
+                if(allOk==False):
+                        errorWindow(errorMessage)
+                else:
+                        disc=ET.SubElement(root, 'disco')
+                        disc.set('nombre', disk_name_aux)
+                        disc.set('anho', year_aux)
+                        disc.set('imagen', "")
+                        for g in genres_selected:
+                                if(genres_selected[g]==True):
+                                        genre=ET.SubElement(disc, 'genero')
+                                        genre.text=g
+                        
+                        for a in artistsnames:
+                                artist=ET.SubElement(disc,'artista')
+                                artist.text=a
+                        songs=ET.SubElement(disc, 'canciones')                        
+                        tree.write(filename)
+
+                        successfullDisk()
+
+        bok.config(command=diskCreator)
+
+"""
+here ends the disco creator window
+***********************************************************************************************************************************************
+"""
+#adding the new disk window to its button
+l1newdisk.configure(command=windowNewAlbum)  
+
+#function to delete disks
+def deleteDisk(pos):
+        global page, root, tree, filename
+        pos_in_audiolibrary=(page*6)+pos
+        
+        alertwndw = Toplevel(wndw)
+        alertwndw.title("¡¡¡Atención!!!")
+        alertwndw.geometry("280x200")
+        alertwndw['bg']='black'
+        
+        Label(
+                alertwndw,
+                text="Atención:",
+                font="Verdana 25",
+                background="black",
+                fg="yellow"
+        ).grid(row=0, column=0, columnspan=2)
+        
+        disk_remove_name="disco"
+        #disk_remove_name=root[pos_in_audiolibrary].attrib('nombre')
+
+        Label(
+                alertwndw,
+                text="Está a punto de eliminar el disco\n" + disk_remove_name+"\n¿Está segur@?",
+                font="Verdana 12",
+                background="black",
+                fg="white"
+        ).grid(row=1, column=0, columnspan=2)
+
+        def remove():
+                root.remove(root[pos_in_audiolibrary])
+                tree.write(filename)
+                readXML()
+                first_page()
+                changeDisksView()
+                alertwndw.destroy()
+
+        Button(
+                alertwndw,
+                text="Borrar disco",
+                background="red",
+                command=remove
+        ).grid(row=2, column=0, pady=30)
+
+        Button(
+                alertwndw,
+                text="Déjalo estar",
+                background="#00bf36",
+                command=lambda: alertwndw.destroy()
+        ).grid(row=2, column=1)        
 
 
 
+list_p[0].configure(command=lambda:deleteDisk(0))
+list_p[1].configure(command=lambda:deleteDisk(1))
+list_p[2].configure(command=lambda:deleteDisk(2))
+list_p[3].configure(command=lambda:deleteDisk(3))
+list_p[4].configure(command=lambda:deleteDisk(4))
+list_p[5].configure(command=lambda:deleteDisk(5))        
 
-l1newdisk.configure(command=windowNewAlbum)    
+
+def disckInferface(pos):
+        global page, root
+        diskwndw = Toplevel(wndw)
+        diskwndw.title("DISCO")
+        diskwndw.geometry("800x800")
+        diskwndw['bg']='black'
+        pos_in_audiolibrary=(page*6)+pos
+
+        Label(
+                diskwndw,
+                background="black",
+                image=arrow_icon,
+                width=100,
+                height=100
+        ).grid(row=0, column=0)
+
+        Label(
+                diskwndw,
+                background="white",
+                image=delete_icon,
+                width=155,
+                height=155
+        ).grid(row=1, column=1, rowspan=3, columnspan=2, padx=20)
+
+        limage_disk=Label(
+                diskwndw,
+                background="black",
+                image=icon_cd,
+                width=150,
+                height=150
+        )
+        limage_disk.grid(row=1, column=1, rowspan=3, columnspan=2)
+
+        Label(
+                diskwndw,
+                text=root[pos_in_audiolibrary].attrib["anho"],
+                background="white",
+                fg="white",
+                font="Verdana 17"
+        ).grid(row=1, column=1)
+
+        lyear=Label(
+                diskwndw,
+                text=root[pos_in_audiolibrary].attrib["anho"],
+                background="black",
+                fg="#00bf36",
+                font="Verdana 15"
+        )
+        lyear.grid(row=1, column=1)
+
+        ltitle=Label(
+                diskwndw,
+                text=root[pos_in_audiolibrary].attrib["nombre"],
+                background="black",
+                fg="#00bf36",
+                font="Verdana 30"
+        )
+        ltitle.grid(row=1, column=3, columnspan=5)
+
+        bedit=Button(
+                diskwndw,
+                background="black",
+                image=edit_icon,
+                width=55,
+                height=55
+        )
+        bedit.grid(column=8, row=1)
+
+        #genres availables in disk
+        lg1=Label(
+                diskwndw,
+                background="white",
+                image=delete_icon,
+                width=20,
+                height=20 
+        )
+        lg1.grid(row=2, column=3, sticky="s", pady=5)
+
+        lg2=Label(
+                diskwndw,
+                background="white",
+                image=delete_icon,
+                width=20,
+                height=20 
+        )
+        lg2.grid(row=2, column=4, pady=5, padx=5, sticky="s")
+
+        lg3=Label(
+                diskwndw,
+                background="white",
+                image=delete_icon,
+                width=20,
+                height=20 
+        )
+        lg3.grid(row=2, column=5, sticky="s", pady=5)
+
+        lg4=Label(
+                diskwndw,
+                background="white",
+                image=delete_icon,
+                width=20,
+                height=20 
+        )
+        lg4.grid(row=2, column=6, padx=5, sticky="s", pady=5)
+
+        lg5=Label(
+                diskwndw,
+                background="white",
+                image=delete_icon,
+                width=20,
+                height=20 
+        )
+        lg5.grid(row=3, column=3, sticky="n")
+
+        lg6=Label(
+                diskwndw,
+                background="white",
+                image=delete_icon,
+                width=20,
+                height=20 
+        )
+        lg6.grid(row=3, column=4, sticky="n")
+
+        lg7=Label(
+                diskwndw,
+                background="white",
+                image=delete_icon,
+                width=20,
+                height=20 
+        )
+        lg7.grid(row=3, column=5, sticky="n")
+
+        lg8=Label(
+                diskwndw,
+                background="white",
+                image=delete_icon,
+                width=20,
+                height=20 
+        )
+        lg8.grid(row=3, column=6, sticky="n")
+
+        artists_long=""
+        count_artist=0
+        for a in root[pos_in_audiolibrary].iter('artista'):
+                count_artist+=1
+                if(count_artist==1):
+                        artists_long+=a.text
+                elif(count_artist!=4):
+                        artists_long+="\n"+a.text
+
+        if(count_artist>3):
+                artists_long+="\ny "+str(count_artist-3)+" más"
+
+        lartists=Label(
+                diskwndw,
+                text=artists_long,
+                background="black",
+                fg="#00bf36",
+                font="Verdana 15"
+        )        
+        lartists.grid(row=2, column=7, rowspan=2)
+
+        bmore_artists=Button(
+                diskwndw,
+                background="white",
+                image=more_artists_icon,
+                width=55,
+                height=55
+        )
+        bmore_artists.grid(column=8, row=3)
+                       
+        badd_songs=Button(
+                diskwndw,
+                background="white",
+                image=more_songs_icon,
+                width=55,
+                height=55
+        )
+        badd_songs.grid(column=1, row=4)                        
+
+        count_songs=0
+        
+        for s in root[pos_in_audiolibrary].iter('cancion'):
+                count_songs+=1
+
+        print(count_songs)        
+
+        page_song=0
+
+        
+
+list_d[0].configure(command=lambda:disckInferface(0))
 
 
 wndw.mainloop()

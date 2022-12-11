@@ -1,12 +1,12 @@
 <audioteca>
-    <disco nombre="discox" anho="2022">
+    <disco nombre="disco0" anho="2000" imagen="">
         <genero>Rock</genero>
         <artista>Manolo escobar</artista>
         <canciones>
-            <cancion nombre="me lo robaron" duracion="5:30" />
+            <cancion nombre="me lo robaron" duracion="5:30"/>
         </canciones>
     </disco>
-    <disco nombre="disco1" anho="1990">
+    <disco nombre="disco1" anho="1990" imagen="">
         <genero>Pop</genero>
         <artista>Paquito</artista>
         <canciones>
@@ -14,21 +14,21 @@
             <cancion nombre="colacao" duracion="5:30" />
         </canciones>
     </disco>
-    <disco nombre="disco2" anho="1990">
+    <disco nombre="disco2" anho="1990" imagen="">
         <genero>Pop</genero>
         <artista>Las divinas</artista>
         <canciones>
-            <cancion nombre="las divinas" duracion="1:20" />
+            <cancion nombre="las divinas" duracion="1:20"/>
         </canciones>
     </disco>
-    <disco nombre="disco3" anho="2000">
+    <disco nombre="disco3" anho="2000" imagen="">
         <genero>Rock</genero>
         <artista>Manolo escobar</artista>
         <canciones>
             <cancion nombre="me lo robaron" duracion="5:30" />
         </canciones>
     </disco>
-    <disco nombre="disco4" anho="1990">
+    <disco nombre="disco4" anho="1990" imagen="">
         <genero>Pop</genero>
         <artista>Paquito</artista>
         <canciones>
@@ -36,21 +36,14 @@
             <cancion nombre="colacao" duracion="5:30" />
         </canciones>
     </disco>
-    <disco nombre="disco5" anho="1990">
-        <genero>Pop</genero>
-        <artista>Las divinas</artista>
-        <canciones>
-            <cancion nombre="las divinas" duracion="1:20" />
-        </canciones>
-    </disco>
-    <disco nombre="disco6" anho="2000">
+    <disco nombre="disco5" anho="2000" imagen="">
         <genero>Rock</genero>
         <artista>Manolo escobar</artista>
         <canciones>
             <cancion nombre="me lo robaron" duracion="5:30" />
         </canciones>
     </disco>
-    <disco nombre="disco7" anho="1990">
+    <disco nombre="disco6" anho="1990" imagen="">
         <genero>Pop</genero>
         <artista>Paquito</artista>
         <canciones>
@@ -58,21 +51,21 @@
             <cancion nombre="colacao" duracion="5:30" />
         </canciones>
     </disco>
-    <disco nombre="disco8" anho="1990">
+    <disco nombre="disco7" anho="1990" imagen="">
         <genero>Pop</genero>
         <artista>Las divinas</artista>
         <canciones>
             <cancion nombre="las divinas" duracion="1:20" />
         </canciones>
     </disco>
-    <disco nombre="disco9" anho="2000">
+    <disco nombre="disco8" anho="2000" imagen="">
         <genero>Rock</genero>
         <artista>Manolo escobar</artista>
         <canciones>
             <cancion nombre="me lo robaron" duracion="5:30" />
         </canciones>
     </disco>
-    <disco nombre="disco10" anho="1990">
+    <disco nombre="disco9" anho="1990" imagen="">
         <genero>Pop</genero>
         <artista>Paquito</artista>
         <canciones>
@@ -80,41 +73,5 @@
             <cancion nombre="colacao" duracion="5:30" />
         </canciones>
     </disco>
-    <disco nombre="disco11" anho="1990">
-        <genero>Pop</genero>
-        <artista>Las divinas</artista>
-        <canciones>
-            <cancion nombre="las divinas" duracion="1:20" />
-        </canciones>
-    </disco>
-    <disco nombre="disco12" anho="2000">
-        <genero>Rock</genero>
-        <artista>Manolo escobar</artista>
-        <canciones>
-            <cancion nombre="me lo robaron" duracion="5:30" />
-        </canciones>
-    </disco>
-    <disco nombre="disco13" anho="1990">
-        <genero>Pop</genero>
-        <artista>Paquito</artista>
-        <canciones>
-            <cancion nombre="chocolatero" duracion="1:20" />
-            <cancion nombre="colacao" duracion="5:30" />
-        </canciones>
-    </disco>
-    <disco nombre="disco14" anho="1990">
-        <genero>Pop</genero>
-        <artista>Las divinas</artista>
-        <canciones>
-            <cancion nombre="las divinas" duracion="1:20" />
-        </canciones>
-    </disco>
-    <disco nombre="disco15" anho="2000">
-        <genero>Rock</genero>
-        <artista>Manolo escobar</artista>
-        <canciones>
-            <cancion nombre="me lo robaron" duracion="5:30" />
-        </canciones>
-    </disco>
-
+  
 </audioteca>
