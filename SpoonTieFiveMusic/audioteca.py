@@ -7,6 +7,7 @@ import os
 
 #needed variables
 page=0
+pageSong=0
 visibleDisks=[0,1,2,3,4,5]
 
 #xml file
@@ -47,6 +48,10 @@ add_artist_icon=PhotoImage(file="src/proyect_images/nuevoartista2.png")
 edit_icon=PhotoImage(file="src/proyect_images/editarpeque.png")
 more_artists_icon=PhotoImage(file="src/proyect_images/tresp.png")
 more_songs_icon=PhotoImage(file="src/proyect_images/mas.png")
+no_sound_icon=PhotoImage(file="src/proyect_images/sinsonido.png")
+pause_icon=PhotoImage(file="src/proyect_images/pause.png")
+play_icon=PhotoImage(file="src/proyect_images/play.png")
+find_song_icon=PhotoImage(file="src/proyect_images/lupapeque.png")
 
 #Basic Labels and Buttons
 l1newdisk=Button(wndw,
@@ -864,14 +869,23 @@ list_p[4].configure(command=lambda:deleteDisk(4))
 list_p[5].configure(command=lambda:deleteDisk(5))        
 
 
+
+"""
+songs of the disks interface
+***********************************************************************************************************************************************
+"""
 def disckInferface(pos):
-        global page, root
+
+        global page, root, tree
+
+        #disk interface configuration
         diskwndw = Toplevel(wndw)
         diskwndw.title("DISCO")
-        diskwndw.geometry("800x800")
+        diskwndw.geometry("800x900")
         diskwndw['bg']='black'
         pos_in_audiolibrary=(page*6)+pos
 
+        #labels just to center all
         Label(
                 diskwndw,
                 background="black",
@@ -888,6 +902,7 @@ def disckInferface(pos):
                 height=155
         ).grid(row=1, column=1, rowspan=3, columnspan=2, padx=20)
 
+        #top of interface (image, year, diskname, artists and some buttons)
         limage_disk=Label(
                 diskwndw,
                 background="black",
@@ -896,6 +911,7 @@ def disckInferface(pos):
                 height=150
         )
         limage_disk.grid(row=1, column=1, rowspan=3, columnspan=2)
+
 
         Label(
                 diskwndw,
@@ -927,10 +943,11 @@ def disckInferface(pos):
                 diskwndw,
                 background="black",
                 image=edit_icon,
-                width=55,
-                height=55
+                width=45,
+                height=45, 
+                border=0
         )
-        bedit.grid(column=8, row=1)
+        bedit.grid(column=8, row=1, pady=10)
 
         #genres availables in disk
         lg1=Label(
@@ -1005,6 +1022,7 @@ def disckInferface(pos):
         )
         lg8.grid(row=3, column=6, sticky="n")
 
+        #artists output
         artists_long=""
         count_artist=0
         for a in root[pos_in_audiolibrary].iter('artista'):
@@ -1024,14 +1042,14 @@ def disckInferface(pos):
                 fg="#00bf36",
                 font="Verdana 15"
         )        
-        lartists.grid(row=2, column=7, rowspan=2)
+        lartists.grid(row=2, column=7, rowspan=2, padx=20)
 
         bmore_artists=Button(
                 diskwndw,
                 background="white",
                 image=more_artists_icon,
-                width=55,
-                height=55
+                width=35,
+                height=35
         )
         bmore_artists.grid(column=8, row=3)
                        
@@ -1039,23 +1057,499 @@ def disckInferface(pos):
                 diskwndw,
                 background="white",
                 image=more_songs_icon,
-                width=55,
-                height=55
+                width=35,
+                height=35
         )
         badd_songs.grid(column=1, row=4)                        
 
+        #number of songs
         count_songs=0
         
         for s in root[pos_in_audiolibrary].iter('cancion'):
                 count_songs+=1
 
-        print(count_songs)        
 
-        page_song=0
+        #songs interface (play and pause button, white background, song name, sound icon, edit icon)*4
 
-        
+        Label(
+                diskwndw,
+                background="black",
+                height=3,
+                width=70
+        ).grid(row=5, column=1, columnspan=7, sticky="e")
+
+        base1=Label(
+                diskwndw,
+                background="white",
+                height=4,
+                width=70
+        )
+        base1.grid(row=6, column=1, columnspan=7, pady=15, sticky="e")
+
+        ns1=Label(
+                diskwndw,
+                image=no_sound_icon,
+                width=55,
+                height=55,
+                background="white",
+                border=0
+        )
+        ns1.grid(row=6, column=7, sticky="e")
+
+        bps1=Button(
+                diskwndw,
+                image=play_icon,
+                width=45,
+                height=45,
+                borderwidth=0,
+                background="white"
+        )
+        bps1.grid(row=6, column=1)
+
+        ls1=Label(
+                diskwndw,
+                text="cancion 1",
+                font="Verdana 15",
+                background="white"
+        )
+        ls1.grid(row=6, column=2, columnspan=5, sticky="w")
+
+        bedit1=Button(
+                diskwndw,
+                background="black",
+                image=edit_icon,
+                width=45,
+                height=45,
+                border=0
+        )
+        bedit1.grid(column=8, row=6, pady=10)
+
+        base2=Label(
+                diskwndw,
+                background="white",
+                height=4,
+                width=70,
+                borderwidth=0
+        )
+        base2.grid(row=7, column=1, columnspan=7, pady=15, sticky="e")
+
+        ns2=Label(
+                diskwndw,
+                image=no_sound_icon,
+                width=55,
+                height=55,
+                background="white",
+                border=0
+        )
+        ns2.grid(row=7, column=7, sticky="e")
+
+        bps2=Button(
+                diskwndw,
+                image=play_icon,
+                width=45,
+                height=45,
+                borderwidth=0,
+                background="white"
+        )
+        bps2.grid(row=7, column=1)
+
+        ls2=Label(
+                diskwndw,
+                text="cancion 1",
+                font="Verdana 15",
+                background="white"
+        )
+        ls2.grid(row=7, column=2, columnspan=5, sticky="w")
+
+        bedit2=Button(
+                diskwndw,
+                background="black",
+                image=edit_icon,
+                width=45,
+                height=45,
+                border=0
+        )
+        bedit2.grid(column=8, row=7, pady=10)
+
+        base3=Label(
+                diskwndw,
+                background="white",
+                height=4,
+                width=70
+        )
+        base3.grid(row=8, column=1, columnspan=7, pady=15, sticky="e")
+
+        ns3=Label(
+                diskwndw,
+                image=no_sound_icon,
+                width=55,
+                height=55,
+                background="white",
+                border=0
+        )
+        ns3.grid(row=8, column=7, sticky="e")
+
+        bps3=Button(
+                diskwndw,
+                image=play_icon,
+                width=45,
+                height=45,
+                borderwidth=0,
+                background="white"
+        )
+        bps3.grid(row=8, column=1)
+
+        ls3=Label(
+                diskwndw,
+                text="cancion 1",
+                font="Verdana 15",
+                background="white"
+        )
+        ls3.grid(row=8, column=2, columnspan=5, sticky="w")
+
+        bedit3=Button(
+                diskwndw,
+                background="black",
+                image=edit_icon,
+                width=45,
+                height=45,
+                border=0
+        )
+        bedit3.grid(column=8, row=8, pady=10)
+
+        base4=Label(
+                diskwndw,
+                background="white",
+                height=4,
+                width=70,
+                borderwidth=0
+        )
+        base4.grid(row=9, column=1, columnspan=7, pady=15, sticky="e")
+
+        ns4=Label(
+                diskwndw,
+                image=no_sound_icon,
+                width=55,
+                height=55,
+                background="white",
+                border=0
+        )
+        ns4.grid(row=9, column=7, sticky="e")
+
+        bps4=Button(
+                diskwndw,
+                image=play_icon,
+                width=45,
+                height=45,
+                borderwidth=0,
+                background="white"
+        )
+        bps4.grid(row=9, column=1)
+
+        ls4=Label(
+                diskwndw,
+                text="cancion 1",
+                font="Verdana 15",
+                background="white"
+        )
+        ls4.grid(row=9, column=2, columnspan=5, sticky="w")
+
+        bedit4=Button(
+                diskwndw,
+                background="black",
+                image=edit_icon,
+                width=45,
+                height=45,
+                border=0
+        )
+        bedit4.grid(column=8, row=9, pady=10)
+
+        bRight=Button(
+                diskwndw,
+                image=arrow_icon,
+                width=30,
+                height=30
+        )
+        bRight.grid(column=7, row=10, sticky="se", pady=20)
+
+        bLeft=Button(
+                diskwndw,
+                image=arrowLeft_icon,
+                width=30,
+                height=30
+        )
+        bLeft.grid(column=1, row=10, sticky="sw", pady=20)
+
+        bLeft.grid_forget()
+
+        #configuring deppending on the number of songs
+        if(count_songs<5):
+                bRight.grid_forget()
+        if(count_songs<4):
+                base4.grid_forget()
+                ns4.grid_forget()
+                bps4.grid_forget()
+                ls4.grid_forget()
+                bedit4.grid_forget()
+        if(count_songs<3):
+                base3.grid_forget()
+                ns3.grid_forget()
+                bps3.grid_forget()
+                ls3.grid_forget()
+                bedit3.grid_forget()
+        if(count_songs<2):
+                base2.grid_forget()
+                ns2.grid_forget()
+                bps2.grid_forget()
+                ls2.grid_forget()
+                bedit2.grid_forget()
+        if(count_songs<1):
+                base1.grid_forget()
+                ns1.grid_forget()
+                bps1.grid_forget()
+                ls1.grid_forget()
+                bedit1.grid_forget() 
+
+        #position of the songs that are showed
+        visible_songs=[0, 1, 2, 3]
+
+        #list with all the names of the songs
+        songs_names=[]
+
+        for s in root[pos_in_audiolibrary].iter("cancion"):
+                songs_names.append(s.attrib["nombre"])
+
+        songs_names.append("here no song")
+        songs_names.append("here no song") 
+        songs_names.append("here no song") 
+        songs_names.append("here no song")         
+
+        if(count_songs>=1):
+                ls1.config(text=songs_names[0])
+
+        if(count_songs>=2):
+                ls2.config(text=songs_names[1]) 
+
+        if(count_songs>=3):
+                ls3.config(text=songs_names[2])
+
+        if(count_songs>=4):
+                ls4.config(text=songs_names[3])                       
+
+        def pauseOrStop(pos, newState):
+                if(newState=="pause"):
+                        if(pos==1):
+                                bps1.configure(image=play_icon)
+                                bps1.configure(command=lambda: pauseOrStop(1, "play"))
+                        if(pos==2):
+                                bps2.configure(image=play_icon)
+                                bps2.configure(command=lambda: pauseOrStop(2, "play"))
+                        if(pos==3):
+                                bps3.configure(image=play_icon)
+                                bps3.configure(command=lambda: pauseOrStop(3, "play"))
+                        if(pos==4):
+                                bps4.configure(image=play_icon)
+                                bps4.configure(command=lambda: pauseOrStop(4, "play"))
+                elif(newState=="play"):
+                        bps1.configure(image=play_icon)
+                        bps1.configure(command=lambda: pauseOrStop(1, "play"))
+                       
+                        bps2.configure(image=play_icon)
+                        bps2.configure(command=lambda: pauseOrStop(2, "play"))
+                        
+                        bps3.configure(image=play_icon)
+                        bps3.configure(command=lambda: pauseOrStop(3, "play"))
+                        
+                        bps4.configure(image=play_icon)
+                        bps4.configure(command=lambda: pauseOrStop(4, "play"))
+
+                        if(pos==1):
+                                bps1.configure(image=pause_icon)
+                                bps1.configure(command=lambda: pauseOrStop(1, "pause"))
+                        if(pos==2):
+                                bps2.configure(image=pause_icon)
+                                bps2.configure(command=lambda: pauseOrStop(2, "pause"))
+                        if(pos==3):
+                                bps3.configure(image=pause_icon)
+                                bps3.configure(command=lambda: pauseOrStop(3, "pause"))
+                        if(pos==4):
+                                bps4.configure(image=pause_icon)
+                                bps4.configure(command=lambda: pauseOrStop(4, "pause"))        
+
+
+        bps1.configure(command=lambda: pauseOrStop(1, "play"))
+        bps2.configure(command=lambda: pauseOrStop(2, "play"))
+        bps3.configure(command=lambda: pauseOrStop(3, "play"))
+        bps4.configure(command=lambda: pauseOrStop(4, "play"))
+
+        #page that is showed p0=0,1,2,3 // p1=4,5,6,7 // p2=8,9,10,11 ...
+        global pageSong
+        pageSong=0
+
+        #True for right, False for left
+        def changeSongs(r):
+                global visible_songs, pageSong
+
+                pauseOrStop(1, "pause")
+                pauseOrStop(2, "pause")
+                pauseOrStop(3, "pause")
+                pauseOrStop(4, "pause")
+
+                if (r==True):
+                        pageSong=pageSong+1
+                else:
+                        pageSong=pageSong-1
+
+                visible_songs=[(pageSong)*4, (pageSong*4)+1, (pageSong*4)+2, (pageSong*4)+3]
+                if(count_songs>=(pageSong*4)+1):
+                        ls1.config(text=songs_names[pageSong*4])
+                        base1.grid(row=6, column=1, columnspan=7, pady=15, sticky="e")
+                        ns1.grid(row=6, column=7, sticky="e")
+                        bps1.grid(row=6, column=1)
+                        ls1.grid(row=6, column=2, columnspan=5, sticky="w")
+                        bedit1.grid(column=8, row=6, pady=10)
+                else:
+                        base1.grid_forget()
+                        ns1.grid_forget()
+                        bps1.grid_forget()
+                        ls1.grid_forget()
+                        bedit1.grid_forget()
+
+
+                if(count_songs>=(pageSong*4)+2):
+                        ls2.config(text=songs_names[(pageSong*4)+1])
+                        base2.grid(row=7, column=1, columnspan=7, pady=15, sticky="e")
+                        ns2.grid(row=7, column=7, sticky="e")
+                        bps2.grid(row=7, column=1)
+                        ls2.grid(row=7, column=2, columnspan=5, sticky="w")
+                        bedit2.grid(column=8, row=7, pady=10) 
+                else:
+                        base2.grid_forget()
+                        ns2.grid_forget()
+                        bps2.grid_forget()
+                        ls2.grid_forget()
+                        bedit2.grid_forget()        
+
+                if(count_songs>=(pageSong*4)+3):
+                        ls3.config(text=songs_names[(pageSong*4)+2])
+                        base3.grid(row=8, column=1, columnspan=7, pady=15, sticky="e")
+                        ns3.grid(row=8, column=7, sticky="e")
+                        bps3.grid(row=8, column=1)
+                        ls3.grid(row=8, column=2, columnspan=5, sticky="w")
+                        bedit3.grid(column=8, row=8, pady=10)
+
+                else:
+                        base3.grid_forget()
+                        ns3.grid_forget()
+                        bps3.grid_forget()
+                        ls3.grid_forget()
+                        bedit3.grid_forget()         
+
+                if(count_songs>=(pageSong*4)+4):
+                        ls4.config(text=songs_names[(pageSong*4)+3])
+                        base4.grid(row=9, column=1, columnspan=7, pady=15, sticky="e")
+                        ns4.grid(row=9, column=7, sticky="e")
+                        bps4.grid(row=9, column=1)
+                        ls4.grid(row=9, column=2, columnspan=5, sticky="w")
+                        bedit4.grid(column=8, row=9, pady=10)  
+                else:
+                        base4.grid_forget()
+                        ns4.grid_forget()
+                        bps4.grid_forget()
+                        ls4.grid_forget()
+                        bedit4.grid_forget() 
+
+                if(count_songs> pageSong*4+4):
+                        bRight.grid(column=7, row=10, sticky="se", pady=20)
+                else:
+                        bRight.grid_forget()
+
+                if(pageSong==0):
+                        bLeft.grid_forget()
+                else: 
+                        bLeft.grid(column=1, row=10, sticky="sw", pady=20)
+
+        bRight.configure(command=lambda: changeSongs(True))
+        bLeft.configure(command=lambda: changeSongs(False))
+
+        #New song interface
+        def createSong():
+                newsongwndw = Toplevel(wndw)
+                newsongwndw.title("Crea aquí tu canción")
+                newsongwndw.geometry("800x700")
+                newsongwndw['bg']='black'
+
+                Label(
+                        newsongwndw,
+                        text="Crea e importa tu canción",
+                        font="Verdana 40",
+                        background="black",
+                        fg="#00bf36"  
+                ).grid(row=1, column=1, columnspan=2)
+
+                Label(
+                        newsongwndw,
+                        text="Nombre :",
+                        font="Verdana 20",
+                        background="black",
+                        fg="#00bf36"  
+                ).grid(row=2, column=1)
+
+                Label(
+                        newsongwndw,
+                        text="MP3 :",
+                        font="Verdana 20",
+                        background="black",
+                        fg="#00bf36"  
+                ).grid(row=3, column=1)
+
+                inputSname = Text(
+                        newsongwndw,
+                        height = 1,
+                        width = 20,
+                        font="Verdana 30"
+                )
+                inputSname.grid(row=2, column=2, sticky="w")
+
+                findSong = Button(
+                        newsongwndw,
+                        height=60,
+                        width=60,
+                        image=find_song_icon
+                )
+                findSong.grid(row=3, column=2, sticky="w")
+
+                bCreate=Button(
+                        newsongwndw,
+                        background="#00bf36",
+                        text="Crear",
+                        font="Verdana 15"       
+                )
+                bCreate.grid(row="4", column="1")
+
+                Button(
+                        newsongwndw,
+                        background="grey",
+                        text="Cancelar",
+                        font="Verdana 15",
+                        command= lambda: newsongwndw.destroy()       
+                ).grid(row="4", column="2")
+
+
+        badd_songs.configure(command=createSong)        
+
+"""
+songs of the disks interface
+***********************************************************************************************************************************************
+"""       
+
 
 list_d[0].configure(command=lambda:disckInferface(0))
+list_d[1].configure(command=lambda:disckInferface(1))
+list_d[2].configure(command=lambda:disckInferface(2))
+list_d[3].configure(command=lambda:disckInferface(3))
+list_d[4].configure(command=lambda:disckInferface(4))
+list_d[5].configure(command=lambda:disckInferface(5))
 
 
 wndw.mainloop()

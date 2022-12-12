@@ -6,76 +6,82 @@
         <artista>Manolo escobar</artista>
         <artista>Manolo escobar</artista>
         <canciones>
-            <cancion nombre="me lo robaron" duracion="5:30"/>
-            <cancion nombre="me lo robaron" duracion="5:30"/>
-            <cancion nombre="me lo robaron" duracion="5:30"/>
+            <cancion nombre="cancion 1" duracion="5:30" link=""/>
+            <cancion nombre="cancion 2" duracion="5:30" link=""/>
+            <cancion nombre="cancion 3" duracion="5:30" link=""/>
+            <cancion nombre="cancion 4" duracion="5:30" link=""/>
+            <cancion nombre="cancion 5" duracion="5:30" link=""/>
+            <cancion nombre="cancion 6" duracion="5:30" link=""/>
+            <cancion nombre="cancion 7" duracion="5:30" link=""/>
+            <cancion nombre="cancion 8" duracion="5:30" link=""/>
+            <cancion nombre="cancion 9" duracion="5:30" link=""/>
         </canciones>
     </disco>
     <disco nombre="disco1" anho="1990" imagen="">
         <genero>Pop</genero>
         <artista>Paquito</artista>
         <canciones>
-            <cancion nombre="chocolatero" duracion="1:20" />
-            <cancion nombre="colacao" duracion="5:30" />
+            <cancion nombre="chocolatero" duracion="1:20" link=""/>
+            <cancion nombre="colacao" duracion="5:30" link=""/>
         </canciones>
     </disco>
     <disco nombre="disco2" anho="1990" imagen="">
         <genero>Pop</genero>
         <artista>Las divinas</artista>
         <canciones>
-            <cancion nombre="las divinas" duracion="1:20"/>
+            <cancion nombre="las divinas" duracion="1:20" link=""/>
         </canciones>
     </disco>
     <disco nombre="disco3" anho="2000" imagen="">
         <genero>Rock</genero>
         <artista>Manolo escobar</artista>
         <canciones>
-            <cancion nombre="me lo robaron" duracion="5:30" />
+            <cancion nombre="me lo robaron" duracion="5:30" link=""/>
         </canciones>
     </disco>
     <disco nombre="disco4" anho="1990" imagen="">
         <genero>Pop</genero>
         <artista>Paquito</artista>
         <canciones>
-            <cancion nombre="chocolatero" duracion="1:20" />
-            <cancion nombre="colacao" duracion="5:30" />
+            <cancion nombre="chocolatero" duracion="1:20" link=""/>
+            <cancion nombre="colacao" duracion="5:30" link=""/>
         </canciones>
     </disco>
     <disco nombre="disco5" anho="2000" imagen="">
         <genero>Rock</genero>
         <artista>Manolo escobar</artista>
         <canciones>
-            <cancion nombre="me lo robaron" duracion="5:30" />
+            <cancion nombre="me lo robaron" duracion="5:30" link=""/>
         </canciones>
     </disco>
     <disco nombre="disco6" anho="1990" imagen="">
         <genero>Pop</genero>
         <artista>Paquito</artista>
         <canciones>
-            <cancion nombre="chocolatero" duracion="1:20" />
-            <cancion nombre="colacao" duracion="5:30" />
+            <cancion nombre="chocolatero" duracion="1:20" link=""/>
+            <cancion nombre="colacao" duracion="5:30" link=""/>
         </canciones>
     </disco>
     <disco nombre="disco7" anho="1990" imagen="">
         <genero>Pop</genero>
         <artista>Las divinas</artista>
         <canciones>
-            <cancion nombre="las divinas" duracion="1:20" />
+            <cancion nombre="las divinas" duracion="1:20" link=""/>
         </canciones>
     </disco>
     <disco nombre="disco8" anho="2000" imagen="">
         <genero>Rock</genero>
         <artista>Manolo escobar</artista>
         <canciones>
-            <cancion nombre="me lo robaron" duracion="5:30" />
+            <cancion nombre="me lo robaron" duracion="5:30" link=""/>
         </canciones>
     </disco>
     <disco nombre="disco9" anho="1990" imagen="">
         <genero>Pop</genero>
         <artista>Paquito</artista>
         <canciones>
-            <cancion nombre="chocolatero" duracion="1:20" />
-            <cancion nombre="colacao" duracion="5:30" />
+            <cancion nombre="chocolatero" duracion="1:20" link=""/>
+            <cancion nombre="colacao" duracion="5:30" link=""/>
         </canciones>
     </disco>
   
