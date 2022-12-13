@@ -1,0 +1,5 @@
+to do:
+
+editar disco
+editar cancion
+crear xml

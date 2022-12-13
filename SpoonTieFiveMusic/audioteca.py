@@ -52,6 +52,15 @@ no_sound_icon=PhotoImage(file="src/proyect_images/sinsonido.png")
 pause_icon=PhotoImage(file="src/proyect_images/pause.png")
 play_icon=PhotoImage(file="src/proyect_images/play.png")
 find_song_icon=PhotoImage(file="src/proyect_images/lupapeque.png")
+classic_mini_icon=PhotoImage(file="src/proyect_images/clasicapeque.png")
+electronic_mini_icon=PhotoImage(file="src/proyect_images/epeque.png")
+jazz_mini_icon=PhotoImage(file="src/proyect_images/jazzpeque.png")
+pop_mini_icon=PhotoImage(file="src/proyect_images/poppeque.png")
+other_mini_icon=PhotoImage(file="src/proyect_images/otrospeque.png")
+rock_mini_icon=PhotoImage(file="src/proyect_images/rpeque.png")
+reggaeton_mini_icon=PhotoImage(file="src/proyect_images/reggaetonpeque.png")
+trap_mini_icon=PhotoImage(file="src/proyect_images/trappeque.png")
+delete_45_icon=PhotoImage(file="src/proyect_images/borrar45.png")
 
 #Basic Labels and Buttons
 l1newdisk=Button(wndw,
@@ -827,7 +836,6 @@ def deleteDisk(pos):
         ).grid(row=0, column=0, columnspan=2)
         
         disk_remove_name="disco"
-        #disk_remove_name=root[pos_in_audiolibrary].attrib('nombre')
 
         Label(
                 alertwndw,
@@ -874,7 +882,7 @@ list_p[5].configure(command=lambda:deleteDisk(5))
 songs of the disks interface
 ***********************************************************************************************************************************************
 """
-def disckInferface(pos):
+def disckInferface(pos, alert):
 
         global page, root, tree
 
@@ -884,6 +892,38 @@ def disckInferface(pos):
         diskwndw.geometry("800x900")
         diskwndw['bg']='black'
         pos_in_audiolibrary=(page*6)+pos
+
+        #function if the user adds a song 
+        def createSuccessfull():
+                s2wndw = Toplevel(diskwndw)
+                s2wndw.title("Creado con éxito")
+                s2wndw.geometry("580x300")
+                s2wndw['bg']='black'
+                Label(
+                        s2wndw,
+                        text="Tu canción se ha creado con éxito:",
+                        font="Verdana 25",
+                        background="black",
+                        fg="#00bf36"
+                ).grid(row=0, column=0)
+
+                Label(
+                        s2wndw,
+                        text="Por el momento la música no está implementada.\nSe guardara la ruta a la canción si se ha introducido",
+                        font="Verdana 12",
+                        background="black",
+                        fg="#00bf36"
+                ).grid(row=1, column=0, pady=40)
+
+                Button(
+                        s2wndw,
+                        text="Aceptar",
+                        background="#00bf36",
+                        command= lambda: s2wndw.destroy()
+                ).grid(row=2, column=0, pady=20)
+        
+        if(alert==True):
+                createSuccessfull()
 
         #labels just to center all
         Label(
@@ -950,46 +990,47 @@ def disckInferface(pos):
         bedit.grid(column=8, row=1, pady=10)
 
         #genres availables in disk
+
         lg1=Label(
                 diskwndw,
-                background="white",
-                image=delete_icon,
+                background="black",
+                image=arrow_icon,
                 width=20,
                 height=20 
         )
-        lg1.grid(row=2, column=3, sticky="s", pady=5)
+        lg1.grid(row=2, column=3, sticky="s", pady=5, padx=5)
 
         lg2=Label(
                 diskwndw,
-                background="white",
-                image=delete_icon,
+                background="black",
+                image=arrow_icon,
                 width=20,
                 height=20 
         )
-        lg2.grid(row=2, column=4, pady=5, padx=5, sticky="s")
+        lg2.grid(row=2, column=4, pady=5, sticky="s")
 
         lg3=Label(
                 diskwndw,
-                background="white",
-                image=delete_icon,
+                background="black",
+                image=arrow_icon,
                 width=20,
                 height=20 
         )
-        lg3.grid(row=2, column=5, sticky="s", pady=5)
+        lg3.grid(row=2, column=5, sticky="s", pady=5, padx=5)
 
         lg4=Label(
                 diskwndw,
-                background="white",
-                image=delete_icon,
+                background="black",
+                image=arrow_icon,
                 width=20,
                 height=20 
         )
-        lg4.grid(row=2, column=6, padx=5, sticky="s", pady=5)
+        lg4.grid(row=2, column=6, sticky="s", pady=5)
 
         lg5=Label(
                 diskwndw,
-                background="white",
-                image=delete_icon,
+                background="black",
+                image=arrow_icon,
                 width=20,
                 height=20 
         )
@@ -997,8 +1038,8 @@ def disckInferface(pos):
 
         lg6=Label(
                 diskwndw,
-                background="white",
-                image=delete_icon,
+                background="black",
+                image=arrow_icon,
                 width=20,
                 height=20 
         )
@@ -1006,8 +1047,8 @@ def disckInferface(pos):
 
         lg7=Label(
                 diskwndw,
-                background="white",
-                image=delete_icon,
+                background="black",
+                image=arrow_icon,
                 width=20,
                 height=20 
         )
@@ -1015,12 +1056,32 @@ def disckInferface(pos):
 
         lg8=Label(
                 diskwndw,
-                background="white",
-                image=delete_icon,
+                background="black",
+                image=arrow_icon,
                 width=20,
                 height=20 
         )
         lg8.grid(row=3, column=6, sticky="n")
+
+        
+        #genres view
+        for genero in root[pos_in_audiolibrary].iter("genero"):
+                if(genero.text=="electronic"):
+                        lg1.configure(background="white", image=electronic_mini_icon)
+                elif(genero.text=="rock"):
+                        lg2.configure(background="white", image=rock_mini_icon)
+                elif(genero.text=="jazz"):
+                        lg3.configure(background="white", image=jazz_mini_icon)
+                elif(genero.text=="pop"):
+                        lg4.configure(background="white", image=pop_mini_icon)
+                elif(genero.text=="classic"):
+                        lg5.configure(background="white", image=classic_mini_icon)
+                elif(genero.text=="reggaeton"):                                      
+                        lg6.configure(background="white", image=reggaeton_mini_icon)
+                elif(genero.text=="trap"):
+                        lg7.configure(background="white", image=trap_mini_icon)
+                else:
+                        lg8.configure(background="white", image=other_mini_icon)            
 
         #artists output
         artists_long=""
@@ -1052,7 +1113,11 @@ def disckInferface(pos):
                 height=35
         )
         bmore_artists.grid(column=8, row=3)
-                       
+
+        if(count_artist<4):
+                bmore_artists.grid_forget()
+
+        #button for adding more songs to the current disk
         badd_songs=Button(
                 diskwndw,
                 background="white",
@@ -1060,17 +1125,18 @@ def disckInferface(pos):
                 width=35,
                 height=35
         )
-        badd_songs.grid(column=1, row=4)                        
-
+        if (count_artist<4):
+                badd_songs.grid(column=1, row=4, pady=15)                        
+        else:
+                badd_songs.grid(column=1, row=4)  
+        
         #number of songs
         count_songs=0
         
         for s in root[pos_in_audiolibrary].iter('cancion'):
                 count_songs+=1
 
-
         #songs interface (play and pause button, white background, song name, sound icon, edit icon)*4
-
         Label(
                 diskwndw,
                 background="black",
@@ -1124,6 +1190,16 @@ def disckInferface(pos):
         )
         bedit1.grid(column=8, row=6, pady=10)
 
+        bdelete1=Button(
+                diskwndw,
+                background="black",
+                image=delete_45_icon,
+                width=45,
+                height=45,
+                border=0
+        )
+        bdelete1.grid(column=9, row=6, pady=10)
+
         base2=Label(
                 diskwndw,
                 background="white",
@@ -1171,6 +1247,16 @@ def disckInferface(pos):
         )
         bedit2.grid(column=8, row=7, pady=10)
 
+        bdelete2=Button(
+                diskwndw,
+                background="black",
+                image=delete_45_icon,
+                width=45,
+                height=45,
+                border=0
+        )
+        bdelete2.grid(column=9, row=7, pady=10)
+
         base3=Label(
                 diskwndw,
                 background="white",
@@ -1216,6 +1302,16 @@ def disckInferface(pos):
                 border=0
         )
         bedit3.grid(column=8, row=8, pady=10)
+
+        bdelete3=Button(
+                diskwndw,
+                background="black",
+                image=delete_45_icon,
+                width=45,
+                height=45,
+                border=0
+        )
+        bdelete3.grid(column=9, row=8, pady=10)
 
         base4=Label(
                 diskwndw,
@@ -1264,6 +1360,18 @@ def disckInferface(pos):
         )
         bedit4.grid(column=8, row=9, pady=10)
 
+        bdelete4=Button(
+                diskwndw,
+                background="black",
+                image=delete_45_icon,
+                width=45,
+                height=45,
+                border=0
+        )
+        bdelete4.grid(column=9, row=9, pady=10)
+
+        #right and left buttons
+
         bRight=Button(
                 diskwndw,
                 image=arrow_icon,
@@ -1310,14 +1418,25 @@ def disckInferface(pos):
                 ls1.grid_forget()
                 bedit1.grid_forget() 
 
-        #position of the songs that are showed
-        visible_songs=[0, 1, 2, 3]
+        def cutString(st):
+                toret=""
+                c=0
+                for l in st:
+                        if(c<12):
+                                toret+=l
+                        else:
+                                break
+                        c+=1
+
+                if(len(st)>12):
+                        toret+="..."
+                return toret        
 
         #list with all the names of the songs
         songs_names=[]
 
         for s in root[pos_in_audiolibrary].iter("cancion"):
-                songs_names.append(s.attrib["nombre"])
+                songs_names.append(cutString(s.attrib["nombre"]))
 
         songs_names.append("here no song")
         songs_names.append("here no song") 
@@ -1336,6 +1455,7 @@ def disckInferface(pos):
         if(count_songs>=4):
                 ls4.config(text=songs_names[3])                       
 
+        #by now only change the image. In a future it will reproduce mp3s 
         def pauseOrStop(pos, newState):
                 if(newState=="pause"):
                         if(pos==1):
@@ -1382,13 +1502,13 @@ def disckInferface(pos):
         bps3.configure(command=lambda: pauseOrStop(3, "play"))
         bps4.configure(command=lambda: pauseOrStop(4, "play"))
 
-        #page that is showed p0=0,1,2,3 // p1=4,5,6,7 // p2=8,9,10,11 ...
+        #page that is showed page0 = pos0, pos1, pos2, pos3 // page1= pos4, pos5, pos6, pos7 // page2= pos8, pos9, pos10, pos11 ...
         global pageSong
         pageSong=0
 
         #True for right, False for left
         def changeSongs(r):
-                global visible_songs, pageSong
+                global pageSong
 
                 pauseOrStop(1, "pause")
                 pauseOrStop(2, "pause")
@@ -1400,7 +1520,6 @@ def disckInferface(pos):
                 else:
                         pageSong=pageSong-1
 
-                visible_songs=[(pageSong)*4, (pageSong*4)+1, (pageSong*4)+2, (pageSong*4)+3]
                 if(count_songs>=(pageSong*4)+1):
                         ls1.config(text=songs_names[pageSong*4])
                         base1.grid(row=6, column=1, columnspan=7, pady=15, sticky="e")
@@ -1474,10 +1593,18 @@ def disckInferface(pos):
 
         #New song interface
         def createSong():
-                newsongwndw = Toplevel(wndw)
+                newsongwndw = Toplevel(diskwndw)
                 newsongwndw.title("Crea aquí tu canción")
                 newsongwndw.geometry("800x700")
                 newsongwndw['bg']='black'
+                
+                Label(
+                        newsongwndw,
+                        font="Verdana 50",
+                        background="black",
+                        fg="black",
+                        text="O"
+                ).grid(row=0, column=0)
 
                 Label(
                         newsongwndw,
@@ -1485,7 +1612,7 @@ def disckInferface(pos):
                         font="Verdana 40",
                         background="black",
                         fg="#00bf36"  
-                ).grid(row=1, column=1, columnspan=2)
+                ).grid(row=1, column=1, columnspan=2, pady=30)
 
                 Label(
                         newsongwndw,
@@ -1493,7 +1620,7 @@ def disckInferface(pos):
                         font="Verdana 20",
                         background="black",
                         fg="#00bf36"  
-                ).grid(row=2, column=1)
+                ).grid(row=2, column=1, pady=30)
 
                 Label(
                         newsongwndw,
@@ -1501,7 +1628,7 @@ def disckInferface(pos):
                         font="Verdana 20",
                         background="black",
                         fg="#00bf36"  
-                ).grid(row=3, column=1)
+                ).grid(row=3, column=1, pady=30)
 
                 inputSname = Text(
                         newsongwndw,
@@ -1515,9 +1642,29 @@ def disckInferface(pos):
                         newsongwndw,
                         height=60,
                         width=60,
-                        image=find_song_icon
+                        image=find_song_icon,
+                        border=0,
+                        background="black"
                 )
                 findSong.grid(row=3, column=2, sticky="w")
+
+                Label(
+                        newsongwndw,
+                        text="Duración :",
+                        font="Verdana 20",
+                        background="black",
+                        fg="#00bf36" 
+                ).grid(column=1, row=4, pady=30)
+
+                lduration=Label(
+                        newsongwndw,
+                        text="future implementation : Def: 3:00",
+                        font="Verdana 20",
+                        background="black",
+                        fg="#00bf36"
+                )
+
+                lduration.grid(row=4, column=2, sticky="w")
 
                 bCreate=Button(
                         newsongwndw,
@@ -1525,7 +1672,7 @@ def disckInferface(pos):
                         text="Crear",
                         font="Verdana 15"       
                 )
-                bCreate.grid(row="4", column="1")
+                bCreate.grid(row="5", column="2", pady=30, sticky="w")
 
                 Button(
                         newsongwndw,
@@ -1533,10 +1680,122 @@ def disckInferface(pos):
                         text="Cancelar",
                         font="Verdana 15",
                         command= lambda: newsongwndw.destroy()       
-                ).grid(row="4", column="2")
+                ).grid(row="5", column="2", sticky="e", padx=100)
+
+                linkmp3=""
+                def askMP3():
+                        global linkmp3
+                        filename=filedialog.askopenfilename(title = "Select file",filetypes = (('mp3 Files.', '*.mp3'),))
+                        if(filename!=""):
+                                linkmp3=filename
 
 
-        badd_songs.configure(command=createSong)        
+                findSong.configure(command=askMP3)
+
+                def alertSong():
+                        alertwndw = Toplevel(newsongwndw)
+                        alertwndw.title("Alerta")
+                        alertwndw.geometry("870x250")
+                        alertwndw['bg']='black'
+                        Label(
+                                alertwndw,
+                                text="Alerta:",
+                                font="Verdana 25",
+                                background="black",
+                                fg="red"
+                        ).grid(row=0, column=0)
+
+                        Label(
+                                alertwndw,
+                                text="La canción debe tener al menos el nombre",
+                                font="Verdana 12",
+                                background="black",
+                                fg="white"
+                        ).grid(row=1, column=0)
+
+                        Button(
+                                alertwndw,
+                                background="#00bf36",
+                                text="Aceptar",
+                                font="Verdana 15",
+                                command= lambda: alertwndw.destroy()
+                        ).grid(row=2, column=0)
+
+                def create():
+
+                        song_name=inputSname.get("1.0", "end-1c").strip()
+
+                        if(song_name==""):
+                                alertSong()
+                        else:
+                                for canciones in root[pos_in_audiolibrary].iter("canciones"):
+                                        c=ET.SubElement(canciones, "cancion")
+                                        c.set('nombre', song_name)
+                                        c.set('duracion', '3:00')
+                                        c.set('link', linkmp3)
+                                        tree.write(filename)
+                                diskwndw.destroy()
+                                disckInferface(pos, True)
+
+                                
+
+                bCreate.configure(command=create)                                
+
+        badd_songs.configure(command=createSong)
+        
+        #interface for deletting song
+        def deleteSong(posaux):
+                alertwndw = Toplevel(diskwndw)
+                alertwndw.title("¡¡¡Atención!!!")
+                alertwndw.geometry("300x200")
+                alertwndw['bg']='black'
+
+                song_position=(pageSong*4)+posaux
+                
+                Label(
+                        alertwndw,
+                        text="Atención:",
+                        font="Verdana 25",
+                        background="black",
+                        fg="yellow"
+                ).grid(row=0, column=0, columnspan=2)
+
+                Label(
+                        alertwndw,
+                        text="Está a punto de eliminar la canción",
+                        font="Verdana 12",
+                        background="black",
+                        fg="white"
+                ).grid(row=1, column=0, columnspan=2)
+
+                def remove2():
+                        for canciones in root[pos_in_audiolibrary].iter("canciones"):
+                                canciones.remove(canciones[song_position]) 
+                        tree.write(filename)
+                        diskwndw.destroy()
+                        disckInferface(pos, False)
+
+                Button(
+                        alertwndw,
+                        text="Borrar canción",
+                        background="red",
+                        command=remove2
+                ).grid(row=2, column=0, pady=30)
+
+                Button(
+                        alertwndw,
+                        text="Déjala estar",
+                        background="#00bf36",
+                        command=lambda: alertwndw.destroy()
+                ).grid(row=2, column=1)
+
+        bdelete1.configure(command=lambda: deleteSong(0))
+        bdelete2.configure(command=lambda: deleteSong(1))
+        bdelete3.configure(command=lambda: deleteSong(2))
+        bdelete4.configure(command=lambda: deleteSong(3))        
+                
+
+
 
 """
 songs of the disks interface
@@ -1544,12 +1803,12 @@ songs of the disks interface
 """       
 
 
-list_d[0].configure(command=lambda:disckInferface(0))
-list_d[1].configure(command=lambda:disckInferface(1))
-list_d[2].configure(command=lambda:disckInferface(2))
-list_d[3].configure(command=lambda:disckInferface(3))
-list_d[4].configure(command=lambda:disckInferface(4))
-list_d[5].configure(command=lambda:disckInferface(5))
+list_d[0].configure(command=lambda:disckInferface(0, False))
+list_d[1].configure(command=lambda:disckInferface(1, False))
+list_d[2].configure(command=lambda:disckInferface(2, False))
+list_d[3].configure(command=lambda:disckInferface(3, False))
+list_d[4].configure(command=lambda:disckInferface(4, False))
+list_d[5].configure(command=lambda:disckInferface(5, False))
 
 
 wndw.mainloop()
