@@ -18,7 +18,7 @@
             <cancion nombre="cancion 9" duracion="5:30" link="" />
             <cancion nombre="ivan" duracion="3:00" link="" />
             <cancion nombre="las divinas 2" duracion="3:00" link="" />
-            </canciones>
+            <cancion nombre="primavera" duracion="3:00" link="" /></canciones>
     </disco>
     <disco nombre="disco1" anho="1990" imagen="">
         <genero>pop</genero>

@@ -4,6 +4,7 @@ from tkinter import ttk
 from tkinter import filedialog
 import datetime
 import os
+import shutil
 
 #needed variables
 page=0
@@ -26,41 +27,41 @@ icon_new = PhotoImage(file = "src/proyect_images/anhadirverde2.png")
 icon_change_green=PhotoImage(file = "src/proyect_images/cambiarverde2.png")
 icon_cd=PhotoImage(file = "src/proyect_images/disco.png")
 arrow_icon=PhotoImage(file = "src/proyect_images/flecha.png")
-arrowLeft_icon=PhotoImage(file="src/proyect_images/flechaizq.png")
-delete_icon=PhotoImage(file="src/proyect_images/borrar.png")
-electronic_icon=PhotoImage(file="src/proyect_images/e.png")
-electronic_black=PhotoImage(file="src/proyect_images/ebn.png")
-rock_icon=PhotoImage(file="src/proyect_images/r.png")
-rock_black=PhotoImage(file="src/proyect_images/rbn.png")
-jazz_icon=PhotoImage(file="src/proyect_images/jazz.png")
-jazz_black=PhotoImage(file="src/proyect_images/jazzbn.png")
-pop_icon=PhotoImage(file="src/proyect_images/pop.png")
-pop_black=PhotoImage(file="src/proyect_images/popbn.png")
-classic_icon=PhotoImage(file="src/proyect_images/clasica.png")
-classic_black=PhotoImage(file="src/proyect_images/clasicabn.png")
-reggaeton_icon=PhotoImage(file="src/proyect_images/reggaeton.png")
-reggaeton_black=PhotoImage(file="src/proyect_images/reggaetonbn.png")
-trap_icon=PhotoImage(file="src/proyect_images/trap.png")
-trap_black=PhotoImage(file="src/proyect_images/trapbn.png")
-other_icon=PhotoImage(file="src/proyect_images/otros.png")
-other_black=PhotoImage(file="src/proyect_images/otrosbn.png")
-add_artist_icon=PhotoImage(file="src/proyect_images/nuevoartista2.png")
-edit_icon=PhotoImage(file="src/proyect_images/editarpeque.png")
-more_artists_icon=PhotoImage(file="src/proyect_images/tresp.png")
-more_songs_icon=PhotoImage(file="src/proyect_images/mas.png")
-no_sound_icon=PhotoImage(file="src/proyect_images/sinsonido.png")
-pause_icon=PhotoImage(file="src/proyect_images/pause.png")
-play_icon=PhotoImage(file="src/proyect_images/play.png")
-find_song_icon=PhotoImage(file="src/proyect_images/lupapeque.png")
-classic_mini_icon=PhotoImage(file="src/proyect_images/clasicapeque.png")
-electronic_mini_icon=PhotoImage(file="src/proyect_images/epeque.png")
-jazz_mini_icon=PhotoImage(file="src/proyect_images/jazzpeque.png")
-pop_mini_icon=PhotoImage(file="src/proyect_images/poppeque.png")
-other_mini_icon=PhotoImage(file="src/proyect_images/otrospeque.png")
-rock_mini_icon=PhotoImage(file="src/proyect_images/rpeque.png")
-reggaeton_mini_icon=PhotoImage(file="src/proyect_images/reggaetonpeque.png")
-trap_mini_icon=PhotoImage(file="src/proyect_images/trappeque.png")
-delete_45_icon=PhotoImage(file="src/proyect_images/borrar45.png")
+arrowLeft_icon=PhotoImage(file = "src/proyect_images/flechaizq.png")
+delete_icon=PhotoImage(file = "src/proyect_images/borrar.png")
+electronic_icon=PhotoImage(file = "src/proyect_images/e.png")
+electronic_black=PhotoImage(file = "src/proyect_images/ebn.png")
+rock_icon=PhotoImage(file = "src/proyect_images/r.png")
+rock_black=PhotoImage(file = "src/proyect_images/rbn.png")
+jazz_icon=PhotoImage(file = "src/proyect_images/jazz.png")
+jazz_black=PhotoImage(file = "src/proyect_images/jazzbn.png")
+pop_icon=PhotoImage(file = "src/proyect_images/pop.png")
+pop_black=PhotoImage(file = "src/proyect_images/popbn.png")
+classic_icon=PhotoImage(file = "src/proyect_images/clasica.png")
+classic_black=PhotoImage(file = "src/proyect_images/clasicabn.png")
+reggaeton_icon=PhotoImage(file = "src/proyect_images/reggaeton.png")
+reggaeton_black=PhotoImage(file = "src/proyect_images/reggaetonbn.png")
+trap_icon=PhotoImage(file = "src/proyect_images/trap.png")
+trap_black=PhotoImage(file = "src/proyect_images/trapbn.png")
+other_icon=PhotoImage(file = "src/proyect_images/otros.png")
+other_black=PhotoImage(file = "src/proyect_images/otrosbn.png")
+add_artist_icon=PhotoImage(file = "src/proyect_images/nuevoartista2.png")
+edit_icon=PhotoImage(file = "src/proyect_images/editarpeque.png")
+more_artists_icon=PhotoImage(file = "src/proyect_images/tresp.png")
+more_songs_icon=PhotoImage(file = "src/proyect_images/mas.png")
+no_sound_icon=PhotoImage(file = "src/proyect_images/sinsonido.png")
+pause_icon=PhotoImage(file = "src/proyect_images/pause.png")
+play_icon=PhotoImage(file = "src/proyect_images/play.png")
+find_song_icon=PhotoImage(file = "src/proyect_images/lupapeque.png")
+classic_mini_icon=PhotoImage(file = "src/proyect_images/clasicapeque.png")
+electronic_mini_icon=PhotoImage(file = "src/proyect_images/epeque.png")
+jazz_mini_icon=PhotoImage(file = "src/proyect_images/jazzpeque.png")
+pop_mini_icon=PhotoImage(file = "src/proyect_images/poppeque.png")
+other_mini_icon=PhotoImage(file = "src/proyect_images/otrospeque.png")
+rock_mini_icon=PhotoImage(file = "src/proyect_images/rpeque.png")
+reggaeton_mini_icon=PhotoImage(file = "src/proyect_images/reggaetonpeque.png")
+trap_mini_icon=PhotoImage(file = "src/proyect_images/trappeque.png")
+delete_45_icon=PhotoImage(file = "src/proyect_images/borrar45.png")
 
 #Basic Labels and Buttons
 l1newdisk=Button(wndw,
@@ -1687,7 +1688,12 @@ def disckInferface(pos, alert):
                         global linkmp3
                         filename=filedialog.askopenfilename(title = "Select file",filetypes = (('mp3 Files.', '*.mp3'),))
                         if(filename!=""):
-                                linkmp3=filename
+                                newfilename="./src/mp3/"
+                                tail=os.path.split(filename)
+                                newfilename+=tail[1]
+                                if(os.path.exists(newfilename)==False):
+                                        shutil.copy(filename, newfilename)
+                        linkmp3=newfilename
 
 
                 findSong.configure(command=askMP3)
@@ -1731,7 +1737,7 @@ def disckInferface(pos, alert):
                                 for canciones in root[pos_in_audiolibrary].iter("canciones"):
                                         c=ET.SubElement(canciones, "cancion")
                                         c.set('nombre', song_name)
-                                        c.set('duracion', '3:00')
+                                        c.set('duracion', '0:00')
                                         c.set('link', linkmp3)
                                         tree.write(filename)
                                 diskwndw.destroy()
@@ -1793,12 +1799,158 @@ def disckInferface(pos, alert):
         bdelete2.configure(command=lambda: deleteSong(1))
         bdelete3.configure(command=lambda: deleteSong(2))
         bdelete4.configure(command=lambda: deleteSong(3))        
-                
 
+        #edit song interface
+        def editSongInterface(posaux):
+                songPos=(pageSong*4)+posaux
+                songName=""
+                songDuration=""
+                songLink=""
+                for canciones in root[pos_in_audiolibrary].iter("canciones"):
+                        songName=canciones[songPos].attrib["nombre"]
+                        songDuration=canciones[songPos].attrib["duracion"]
+                        songLink=canciones[songPos].attrib["link"]
+                        break
+
+                editsongwndw = Toplevel(diskwndw)
+                editsongwndw.title("Crea aquí tu canción")
+                editsongwndw.geometry("800x700")
+                editsongwndw['bg']='black'
+                
+                Label(
+                        editsongwndw,
+                        text="O",
+                        background="black",
+                        font="Verdana 50",
+                        fg="black"
+                ).grid(row=0, column=0)
+
+                Label(
+                        editsongwndw,
+                        text="Edita aquí tu canción",
+                        font="Verdana 40",
+                        background="black",
+                        fg="#00bf36"
+                ).grid(row=1, column=1, columnspan=3, pady=30)
+
+                Label(
+                        editsongwndw,
+                        text="nombre :",
+                        font="Verdana 20",
+                        background="black",
+                        fg="#00bf36"
+                ).grid(row=2, column=1)
+
+                Label(
+                        editsongwndw,
+                        text="link :",
+                        font="Verdana 20",
+                        background="black",
+                        fg="#00bf36"
+                ).grid(row=3, column=1)
+
+                Label(
+                        editsongwndw,
+                        text="duración :",
+                        font="Verdana 20",
+                        background="black",
+                        fg="#00bf36"
+                ).grid(row=4, column=1)
+
+                inputName=Text(
+                        editsongwndw,
+                        height=1,
+                        width=20,
+                        font="Verdana 20"
+                )
+                inputName.grid(row=2, column=2, columnspan=2)
+                inputName.insert(INSERT, songName)
+
+                changeSong=Button(
+                        editsongwndw,
+                        height=60,
+                        width=60,
+                        image=find_song_icon,
+                        border=0,
+                        background="black"
+                )
+                changeSong.grid(row=3, column=3, sticky="e", padx=60)
+                
+                lLink=Label(
+                        editsongwndw,
+                        text=songLink,
+                        font="Verdana 20",
+                        background="black",
+                        fg="#00bf36"
+                )
+                lLink.grid(row=3, column=2, pady=30)
+
+                if(songLink==""):
+                        lLink.configure(text="no file found")
+
+                lDuracion=Label(
+                        editsongwndw,
+                        text=songDuration,
+                        font="Verdana 20",
+                        background="black",
+                        fg="#00bf36"
+                )
+                lDuracion.grid(row=4, column=2)
+
+                bSaveAndExit=Button(
+                        editsongwndw,
+                        background="#00bf36",
+                        font="Verdana 20",
+                        text="Guardar"
+                )
+                bSaveAndExit.grid(row=5, column=1)
+
+                Button(
+                        editsongwndw,
+                        font="Verdana 20",
+                        text="Cancelar",
+                        background="grey",
+                        fg="black",
+                        command= lambda: editsongwndw.destroy()
+                ).grid(row=5, column=3, pady=30)
+
+                def searchMP32():
+                        global songLink
+                        filename=filedialog.askopenfilename(title = "Select file",filetypes = (('mp3 Files.', '*.mp3'),))
+                        if(filename!=""):
+                                newfilename="./src/mp3/"
+                                tail=os.path.split(filename)
+                                newfilename+=tail[1]
+                                if(os.path.exists(newfilename)==False):
+                                        shutil.copy(filename, newfilename)
+                        songLink=newfilename
+                        lLink.configure(text=songLink)
+
+                changeSong.configure(command=lambda: searchMP32())        
+
+                def saveAndExit():
+                        namenew=inputName.get("1.0", "end-1c")
+                        for canciones in root[pos_in_audiolibrary].iter("canciones"):
+                                if(namenew==""):
+                                        namenew=songName
+                                canciones[songPos].set('nombre', namenew)
+                                canciones[songPos].set('link', songLink)
+                        tree.write(filename)
+                        editsongwndw.destroy()
+                        diskwndw.destroy()
+                        disckInferface(pos, False)
+
+                bSaveAndExit.configure(command=lambda: saveAndExit())
+
+
+        bedit1.configure(command=lambda:editSongInterface(0))
+        bedit2.configure(command=lambda:editSongInterface(1))
+        bedit3.configure(command=lambda:editSongInterface(2))
+        bedit4.configure(command=lambda:editSongInterface(3))
 
 
 """
-songs of the disks interface
+end ofsongs of the disks interface
 ***********************************************************************************************************************************************
 """       
 
