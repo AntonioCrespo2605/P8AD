@@ -1208,7 +1208,7 @@ def disckInferface(pos, alert):
                 count_artist+=1
                 if(count_artist==1):
                         artists_long+=a.text
-                elif(count_artist!=4):
+                elif(count_artist<4):
                         artists_long+="\n"+a.text
 
         if(count_artist>3):
@@ -2451,22 +2451,15 @@ def disckInferface(pos, alert):
 
         bedit.configure(command=editDiskInteface)        
 
-        #it only shows all the artist in the disc
+        #it shows all the artist in the disc and allow to delete it
         def showArtistsInDisk():
                 artistwndw = Toplevel(diskwndw)
                 artistwndw.title("Artistas")
                 artistwndw.geometry("800x700")
                 artistwndw['bg']='black'
-                count=0
-                for artista in root[pos_in_audiolibrary].iter("artista"):
-                        Label(
-                                artistwndw,
-                                text=artista.text,
-                                font="Verdana 10",
-                                background="black",
-                                fg="#00bf36"
-                        ).grid(row=count, column=0)
-                        count+=1
+
+               
+                                
 
         bmore_artists.configure(command=lambda:showArtistsInDisk())
         bedit1.configure(command=lambda:editSongInterface(0))

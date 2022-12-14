@@ -1,9 +1,11 @@
 <audioteca>
     <disco nombre="disco0" anho="1980" imagen="">
-        <artista>Manolo escobar</artista>
-        <artista>Manolo escobar</artista>
-        <artista>Manolo escobar</artista>
-        <artista>Manolo escobar</artista>
+        <artista>artista 1</artista>
+        <artista>artista 2</artista>
+        <artista>artista 3</artista>
+        <artista>artista 4</artista>
+        <artista>artista 5</artista>
+        <artista>artista 6</artista>
         <canciones>
             <cancion nombre="cancion 1" duracion="5:30" link="./src/mp3/primavera.mp3" />
             <cancion nombre="cancion 2" duracion="5:30" link="" />
