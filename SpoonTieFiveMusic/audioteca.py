@@ -10,6 +10,7 @@ import shutil
 page=0
 pageSong=0
 visibleDisks=[0,1,2,3,4,5]
+songLink=""
 
 #xml file
 filename="MusicaXML/audioteca.xml"
@@ -206,7 +207,12 @@ def changeDisksView():
         nrow=4
         ncolumn=1
         for i in range(6):
-                if(position+1<=numDisks):
+                if(numDisks==0):
+                        list_p[i].grid_forget()
+                        list_n[i].grid_forget()
+                        list_d[i].grid_forget()
+
+                elif(position+1<=numDisks):
                         if(i%2==0):
                                 list_d[i].grid(row=nrow, column=ncolumn, sticky="e", padx=15, pady=15)
                                 list_p[i].grid(row=nrow, column=ncolumn, sticky="ne", pady=15, padx=15)
@@ -266,6 +272,117 @@ if(numDisks>6):
                 height=10
         ).grid(row=7, column=0)
 
+#ask if the user wants to open an existing xml or create a new one
+def askChangeCreate():
+        askwndw = Toplevel(wndw)
+        askwndw.title("¿Que quiere hacer?")
+        askwndw.geometry("450x250")
+        askwndw['bg']='black'
+
+        Label(
+                askwndw,
+                background="black",
+                fg="#00bf36",
+                font="Verdana 30",
+                text="¿Qué deseas hacer?"
+        ).grid(row=0, column=0, columnspan=2)
+
+        change=Button(
+                askwndw,
+                background="#00bf36",
+                font="Verdana 15",
+                text="Abrir xml"
+        )
+        change.grid(row=1, column=0, pady=30)
+
+        create=Button(
+                askwndw,
+                background="#00bf36",
+                font="Verdana 15",
+                text="Crear xml"
+        )
+        create.grid(row=1, column=1)
+
+        def changeOption():
+                askwndw.destroy()
+                changeXML()
+
+        change.configure(command=changeOption)
+
+        def createOption():
+                askwndw.destroy()
+                createNewXML()
+
+        create.configure(command=createOption)
+        
+
+def createNewXML():
+        createXMLwndw = Toplevel(wndw)
+        createXMLwndw.title("Crear audioteca")
+        createXMLwndw.geometry("500x250")
+        createXMLwndw['bg']='black'
+
+        Label(
+                createXMLwndw,
+                text="Escribe el nombre de tu audioteca",
+                background="black",
+                fg="#00bf36",
+                font="Verdana 20"
+        ).grid(row=0, column=0)
+
+        inputname = Text(
+                createXMLwndw,
+                height = 1,
+                width = 15,
+                font="Verdana 30"
+        )
+        inputname.grid(row=1, column=0, pady=30)
+
+        bAudioLibrary = Button(
+                createXMLwndw,
+                font="Verdana 15",
+                background="#00bf36",
+                text="Crear"
+        )
+        bAudioLibrary.grid(row=2, column=0)
+
+        def createXMLInFolder():
+                global filename, root, tree, page, numDisks
+                fileToCreate="./MusicaXML/"+ inputname.get("1.0", "end-1c")
+                fileToCreateAux=fileToCreate+".xml"
+
+                if(os.path.isfile(fileToCreateAux)==True):
+                        count=1
+                        stay=True
+                        while (stay==True):
+                                fileToCreateAux=fileToCreate+str(count)+".xml"
+                                if(os.path.isfile(fileToCreateAux)==False):
+                                        stay=False
+                                count+=1        
+                        
+
+                with open(fileToCreateAux, 'w') as f:
+                        f.write("<audioteca>\n</audioteca>")
+
+                createXMLwndw.destroy()
+
+                filename=fileToCreateAux
+                tree = ET.parse(filename)
+                root=tree.getroot()
+                f=open(filename, 'r')
+                l4file.configure(text="fichero: "+os.path.basename(f.name))
+                numDisks=len(root)
+                page=0
+                if(numDisks>6):
+                        arrowR.grid(row=7, column=2)
+                else:
+                        arrowR.grid_forget()
+                changeDisksView()
+
+
+        bAudioLibrary.configure(command=lambda:createXMLInFolder())        
+
+
 #function for updating disks
 def changeXML():
         global root, tree, filename, numDisks, page, arrowR, l4file
@@ -306,7 +423,7 @@ def first_page():
 
 #adding the command to the xml button
 l3xml.configure(
-        command=changeXML
+        command=askChangeCreate
 )
 
 #obtain current year for using as default year on the disks
@@ -359,7 +476,7 @@ def windowNewAlbum():
                         height = 1,
                         width = 15,
                         font="Verdana 30"
-                        )
+                )
   
         inputname.grid(row=1, column=2, columnspan=3, pady=10, padx=10, sticky="w")
 
@@ -1400,24 +1517,28 @@ def disckInferface(pos, alert):
                 bps4.grid_forget()
                 ls4.grid_forget()
                 bedit4.grid_forget()
+                bdelete4.grid_forget()
         if(count_songs<3):
                 base3.grid_forget()
                 ns3.grid_forget()
                 bps3.grid_forget()
                 ls3.grid_forget()
                 bedit3.grid_forget()
+                bdelete3.grid_forget()
         if(count_songs<2):
                 base2.grid_forget()
                 ns2.grid_forget()
                 bps2.grid_forget()
                 ls2.grid_forget()
                 bedit2.grid_forget()
+                bdelete2.grid_forget()
         if(count_songs<1):
                 base1.grid_forget()
                 ns1.grid_forget()
                 bps1.grid_forget()
                 ls1.grid_forget()
-                bedit1.grid_forget() 
+                bedit1.grid_forget()
+                bdelete1.grid_forget() 
 
         def cutString(st):
                 toret=""
@@ -1802,6 +1923,7 @@ def disckInferface(pos, alert):
 
         #edit song interface
         def editSongInterface(posaux):
+                global songLink
                 songPos=(pageSong*4)+posaux
                 songName=""
                 songDuration=""
@@ -1924,11 +2046,13 @@ def disckInferface(pos, alert):
                                 if(os.path.exists(newfilename)==False):
                                         shutil.copy(filename, newfilename)
                         songLink=newfilename
+
                         lLink.configure(text=songLink)
 
                 changeSong.configure(command=lambda: searchMP32())        
 
                 def saveAndExit():
+                        global songLink
                         namenew=inputName.get("1.0", "end-1c")
                         for canciones in root[pos_in_audiolibrary].iter("canciones"):
                                 if(namenew==""):
@@ -1942,7 +2066,409 @@ def disckInferface(pos, alert):
 
                 bSaveAndExit.configure(command=lambda: saveAndExit())
 
+        #interface with the options to edit
+        def editDiskInteface():
+                editdiskwndw = Toplevel(diskwndw)
+                editdiskwndw.title("Artistas")
+                editdiskwndw.geometry("800x700")
+                editdiskwndw['bg']='black'
 
+                Label(
+                        editdiskwndw,
+                        font="Verdana 50",
+                        background="black",
+                        text="O"
+                ).grid(row=0, column=0)
+
+                Label(
+                        editdiskwndw,
+                        font="Verdana 30",
+                        background="black",
+                        text="Edita aquí tu disco",
+                        fg="#00bf36"
+                ).grid(row=1, column=1, columnspan=4)
+
+                Label(
+                        editdiskwndw,
+                        font="Verdana 20",
+                        background="black",
+                        text="Nombre :",
+                        fg="#00bf36"
+                ).grid(row=2, column=1)
+
+                inputNewName = Text(
+                        editdiskwndw,
+                        height = 1,
+                        width = 15,
+                        font="Verdana 30"
+                )
+                inputNewName.grid(row=2, column=2, columnspan=3, pady="30")
+                oldName=root[pos_in_audiolibrary].attrib["nombre"]
+                inputNewName.insert(INSERT, oldName)
+
+                Label(
+                        editdiskwndw,
+                        font="Verdana 20",
+                        background="black",
+                        text="Artistas :",
+                        fg="#00bf36"
+                ).grid(row=3, column=1)
+
+                bedit_artists=Button(
+                        editdiskwndw,
+                        image=edit_icon,
+                        width=45,
+                        height=45
+                )
+                bedit_artists.grid(row=3, column=2)
+
+                Label(
+                        editdiskwndw,
+                        font="Verdana 20",
+                        background="black",
+                        text="Año :",
+                        fg="#00bf36"
+                ).grid(row=4, column=1)
+
+                inputNewYear = Text(
+                        editdiskwndw,
+                        height = 1,
+                        width = 15,
+                        font="Verdana 30"
+                )
+                inputNewYear.grid(row=4, column=2, columnspan=3, pady=30)
+                oldYear=root[pos_in_audiolibrary].attrib["anho"]
+                inputNewYear.insert(INSERT, oldYear)
+
+                Label(
+                        editdiskwndw,
+                        font="Verdana 20",
+                        background="black",
+                        text="Géneros :",
+                        fg="#00bf36"
+                ).grid(row=5, column=1)
+
+
+                bElectronic=Button(
+                        editdiskwndw,
+                        background="black",
+                        width=100,
+                        height=100,
+                        image=electronic_black
+                )
+                bElectronic.grid(column=1, row=6, pady=30, padx=15)
+
+                Label(
+                        editdiskwndw,
+                        background="black",
+                        text="Electrónica",
+                        fg="#00bf36",
+                        font="Verdana 10"
+                ).grid(column=1, row=6, sticky="s", pady=20)
+
+                bRock=Button(
+                        editdiskwndw,
+                        background="black",
+                        width=100,
+                        height=100,
+                        image=rock_black
+                )
+                bRock.grid(column=2, row=6, padx=15)
+
+                Label(
+                        editdiskwndw,
+                        background="black",
+                        text="Rock",
+                        fg="#00bf36",
+                        font="Verdana 10"
+                ).grid(column=2, row=6, sticky="s", pady=20)
+
+                bJazz=Button(
+                        editdiskwndw,
+                        background="black",
+                        width=100,
+                        height=100,
+                        image=jazz_black
+                )
+                bJazz.grid(column=3, row=6, padx=15)
+
+                Label(
+                        editdiskwndw,
+                        background="black",
+                        text="Jazz",
+                        fg="#00bf36",
+                        font="Verdana 10"
+                ).grid(column=3, row=6, sticky="s", pady=20)
+
+                bPop=Button(
+                        editdiskwndw,
+                        background="black",
+                        width=100,
+                        height=100,
+                        image=pop_black
+                )
+                bPop.grid(column=4, row=6, padx=15)
+
+                Label(
+                        editdiskwndw,
+                        background="black",
+                        text="Pop",
+                        fg="#00bf36",
+                        font="Verdana 10"
+                ).grid(column=4, row=6, sticky="s", pady=20)
+
+                bClassic=Button(
+                        editdiskwndw,
+                        background="black",
+                        width=100,
+                        height=100,
+                        image=classic_black
+                )
+                bClassic.grid(column=1, row=7, padx=15, pady=15)
+
+                Label(
+                        editdiskwndw,
+                        background="black",
+                        text="Clásica",
+                        fg="#00bf36",
+                        font="Verdana 10"
+                ).grid(column=1, row=7, sticky="s")
+
+                bReggaeton=Button(
+                        editdiskwndw,
+                        background="black",
+                        width=100,
+                        height=100,
+                        image=reggaeton_black
+                )
+                bReggaeton.grid(column=2, row=7, padx=15)
+
+                Label(
+                        editdiskwndw,
+                        background="black",
+                        text="Reggaeton",
+                        fg="#00bf36",
+                        font="Verdana 10"
+                ).grid(column=2, row=7, sticky="s")
+
+                bTrap=Button(
+                        editdiskwndw,
+                        background="black",
+                        width=100,
+                        height=100,
+                        image=trap_black
+                )
+                bTrap.grid(column=3, row=7, padx=15)
+
+                Label(
+                        editdiskwndw,
+                        background="black",
+                        text="Trap",
+                        fg="#00bf36",
+                        font="Verdana 10"
+                ).grid(column=3, row=7, sticky="s")
+
+                bOthers=Button(
+                        editdiskwndw,
+                        background="black",
+                        width=100,
+                        height=100,
+                        image=other_black
+                )
+                bOthers.grid(column=4, row=7, padx=15)
+
+                Label(
+                        editdiskwndw,
+                        background="black",
+                        text="Otros",
+                        fg="#00bf36",
+                        font="Verdana 10"
+                ).grid(column=4, row=7, sticky="s")
+                
+                genres_selected=[False, False, False, False, False, False, False, False]
+
+                for genero in root[0].iter("genero"):
+                        gName=genero.text
+                        if(gName=="electronic"):
+                                genres_selected[0]=True
+                                bElectronic.configure(image=electronic_icon)
+                        elif(gName=="rock"):
+                                genres_selected[1]=True
+                                bRock.configure(image=rock_icon)
+                        elif(gName=="jazz"):
+                                genres_selected[2]=True
+                                bJazz.configure(image=jazz_icon)
+                        elif(gName=="pop"):
+                                genres_selected[3]=True
+                                bPop.configure(image=pop_icon)
+                        elif(gName=="classic"):
+                                genres_selected[4]=True
+                                bClassic.configure(image=classic_icon)
+                        elif(gName=="reggaeton"):
+                                genres_selected[5]=True
+                                bReggaeton.configure(image=reggaeton_icon)
+                        elif(gName=="trap"):
+                                genres_selected[6]=True
+                                bTrap.configure(image=trap_icon)
+                        else:
+                                genres_selected[7]=True  
+                                bOthers.configure(image=other_icon)
+
+
+                def changeLightDark(posgenre):
+                        if(genres_selected[posgenre]==True):
+                                genres_selected[posgenre]=False
+                        else:
+                                genres_selected[posgenre]=True
+
+                        if(posgenre==0):
+                                if(genres_selected[posgenre]==True):
+                                        bElectronic.configure(image=electronic_icon)
+                                else:
+                                        bElectronic.configure(image=electronic_black)
+                        if(posgenre==1):
+                                if(genres_selected[posgenre]==True):
+                                        bRock.configure(image=rock_icon)
+                                else:
+                                        bRock.configure(image=rock_black)                         
+                        if(posgenre==2):
+                                if(genres_selected[posgenre]==True):
+                                        bJazz.configure(image=jazz_icon)
+                                else:
+                                        bJazz.configure(image=jazz_black) 
+                        if(posgenre==3):
+                                if(genres_selected[posgenre]==True):
+                                        bPop.configure(image=pop_icon)
+                                else:
+                                        bPop.configure(image=pop_black) 
+                        if(posgenre==4):
+                                if(genres_selected[posgenre]==True):
+                                        bClassic.configure(image=classic_icon)
+                                else:
+                                        bClassic.configure(image=classic_black)
+                        if(posgenre==5):
+                                if(genres_selected[posgenre]==True):
+                                        bReggaeton.configure(image=reggaeton_icon)
+                                else:
+                                        bReggaeton.configure(image=reggaeton_black)
+                        if(posgenre==6):
+                                if(genres_selected[posgenre]==True):
+                                        bTrap.configure(image=trap_icon)
+                                else:
+                                        bTrap.configure(image=trap_black)
+                        if(posgenre==7):
+                                if(genres_selected[posgenre]==True):
+                                        bOthers.configure(image=other_icon)
+                                else:
+                                        bOthers.configure(image=other_black)                                                 
+
+                bElectronic.configure(command=lambda:changeLightDark(0))
+                bRock.configure(command=lambda:changeLightDark(1))
+                bJazz.configure(command=lambda:changeLightDark(2))
+                bPop.configure(command=lambda:changeLightDark(3))
+                bClassic.configure(command=lambda:changeLightDark(4))
+                bReggaeton.configure(command=lambda:changeLightDark(5))
+                bTrap.configure(command=lambda:changeLightDark(6))
+                bOthers.configure(command=lambda:changeLightDark(7))
+
+                Button(
+                        editdiskwndw,
+                        background="grey",
+                        text="Cancelar",
+                        font="Verdana 15",
+                        command=lambda:editdiskwndw.destroy()
+                ).grid(column=4, row=8)
+
+                bSave=Button(
+                        editdiskwndw,
+                        background="#00bf36",
+                        text="Guardar",
+                        font="Verdana 15"
+                )
+                bSave.grid(column=1, row=8)
+
+                def saveAndExit(posgenre): 
+                        newName=inputNewName.get("1.0", "end-1c")
+                        newYear=inputNewYear.get("1.0", "end-1c")
+                        if(newName==""):
+                                newName=oldName
+                        if(newYear==""):
+                                newYear=oldYear
+
+                        if(newYear.isnumeric()==False):
+                                newYear=oldYear
+                        else:        
+                                if(int(newYear)>int(year) or int(newYear)<0):
+                                        newYear=oldYear
+
+                        root[pos_in_audiolibrary].set('nombre', newName)
+                        root[pos_in_audiolibrary].set('anho', newYear)
+
+                        aux=True
+                        while (aux==True):
+                                aux=False
+                                for se in root[pos_in_audiolibrary]:
+                                        if(se.tag=="genero"):
+                                                root[pos_in_audiolibrary].remove(se)
+                                                aux=True
+                        tree.write(filename)
+
+                        if(posgenre[0]==True):
+                                genre=ET.SubElement(root[pos_in_audiolibrary], 'genero')
+                                genre.text="electronic"
+                        if(posgenre[1]==True):
+                                genre2=ET.SubElement(root[pos_in_audiolibrary], 'genero')
+                                genre2.text="rock"                       
+                        if(posgenre[2]==True):
+                                genre3=ET.SubElement(root[pos_in_audiolibrary], 'genero')
+                                genre3.text="jazz"
+                        if(posgenre[3]==True):
+                                genre4=ET.SubElement(root[pos_in_audiolibrary], 'genero')
+                                genre4.text="pop"
+                        if(posgenre[4]==True):
+                                genre5=ET.SubElement(root[pos_in_audiolibrary], 'genero')
+                                genre5.text="classic"
+                        if(posgenre[5]==True):
+                                genre6=ET.SubElement(root[pos_in_audiolibrary], 'genero')
+                                genre6.text="reggaeton"
+                        if(posgenre[6]==True):
+                                genre7=ET.SubElement(root[pos_in_audiolibrary], 'genero')
+                                genre7.text="trap"
+                        if(posgenre[7]==True):
+                                genre8=ET.SubElement(root[pos_in_audiolibrary], 'genero')
+                                genre8.text="other"
+
+                        tree.write(filename)
+                        editdiskwndw.destroy()
+                        diskwndw.destroy()
+                        disckInferface(pos, False)
+
+
+
+                bSave.configure(command=lambda:saveAndExit(genres_selected))
+                                
+
+
+        bedit.configure(command=editDiskInteface)        
+
+        #it only shows all the artist in the disc
+        def showArtistsInDisk():
+                artistwndw = Toplevel(diskwndw)
+                artistwndw.title("Artistas")
+                artistwndw.geometry("800x700")
+                artistwndw['bg']='black'
+                count=0
+                for artista in root[pos_in_audiolibrary].iter("artista"):
+                        Label(
+                                artistwndw,
+                                text=artista.text,
+                                font="Verdana 10",
+                                background="black",
+                                fg="#00bf36"
+                        ).grid(row=count, column=0)
+                        count+=1
+
+        bmore_artists.configure(command=lambda:showArtistsInDisk())
         bedit1.configure(command=lambda:editSongInterface(0))
         bedit2.configure(command=lambda:editSongInterface(1))
         bedit3.configure(command=lambda:editSongInterface(2))

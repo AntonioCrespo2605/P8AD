@@ -1,16 +1,14 @@
 <audioteca>
-    <disco nombre="disco0" anho="2000" imagen="">
-        <genero>rock</genero>
-        <genero>pop</genero>
+    <disco nombre="disco0" anho="1980" imagen="">
         <artista>Manolo escobar</artista>
         <artista>Manolo escobar</artista>
         <artista>Manolo escobar</artista>
         <artista>Manolo escobar</artista>
         <canciones>
-            <cancion nombre="cancion 1" duracion="5:30" link="" />
+            <cancion nombre="cancion 1" duracion="5:30" link="./src/mp3/primavera.mp3" />
             <cancion nombre="cancion 2" duracion="5:30" link="" />
             <cancion nombre="cancion 3" duracion="5:30" link="" />
-            <cancion nombre="cancion 4" duracion="5:30" link="" />
+            <cancion nombre="aaa" duracion="5:30" link="" />
             <cancion nombre="cancion 5" duracion="5:30" link="" />
             <cancion nombre="cancion 6" duracion="5:30" link="" />
             <cancion nombre="cancion 7" duracion="5:30" link="" />
@@ -19,7 +17,7 @@
             <cancion nombre="ivan" duracion="3:00" link="" />
             <cancion nombre="las divinas 2" duracion="3:00" link="" />
             <cancion nombre="primavera" duracion="3:00" link="" /></canciones>
-    </disco>
+    <genero>electronic</genero><genero>jazz</genero><genero>trap</genero></disco>
     <disco nombre="disco1" anho="1990" imagen="">
         <genero>pop</genero>
         <artista>Paquito</artista>
