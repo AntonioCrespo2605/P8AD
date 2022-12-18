@@ -9,7 +9,9 @@ import shutil
 #needed variables
 page=0
 pageSong=0
+pageArtists=0
 visibleDisks=[0,1,2,3,4,5]
+showed=[0, 1, 2, 3]
 songLink=""
 
 #xml file
@@ -24,7 +26,13 @@ wndw.iconphoto(True,app_icon)
 wndw.geometry("870x1000")
 
 #Images
+add_artist_icon=PhotoImage(file = "src/proyect_images/nuevoartista2.png")
+no_sound_icon=PhotoImage(file = "src/proyect_images/sinsonido.png")
+trap_icon=PhotoImage(file = "src/proyect_images/trap.png")
+other_icon=PhotoImage(file = "src/proyect_images/otros.png")
+no_sound_icon=PhotoImage(file = "src/proyect_images/sinsonido.png")
 icon_new = PhotoImage(file = "src/proyect_images/anhadirverde2.png")
+other_mini_icon=PhotoImage(file = "src/proyect_images/otrospeque.png")
 icon_change_green=PhotoImage(file = "src/proyect_images/cambiarverde2.png")
 icon_cd=PhotoImage(file = "src/proyect_images/disco.png")
 arrow_icon=PhotoImage(file = "src/proyect_images/flecha.png")
@@ -42,15 +50,11 @@ classic_icon=PhotoImage(file = "src/proyect_images/clasica.png")
 classic_black=PhotoImage(file = "src/proyect_images/clasicabn.png")
 reggaeton_icon=PhotoImage(file = "src/proyect_images/reggaeton.png")
 reggaeton_black=PhotoImage(file = "src/proyect_images/reggaetonbn.png")
-trap_icon=PhotoImage(file = "src/proyect_images/trap.png")
 trap_black=PhotoImage(file = "src/proyect_images/trapbn.png")
-other_icon=PhotoImage(file = "src/proyect_images/otros.png")
 other_black=PhotoImage(file = "src/proyect_images/otrosbn.png")
-add_artist_icon=PhotoImage(file = "src/proyect_images/nuevoartista2.png")
 edit_icon=PhotoImage(file = "src/proyect_images/editarpeque.png")
 more_artists_icon=PhotoImage(file = "src/proyect_images/tresp.png")
 more_songs_icon=PhotoImage(file = "src/proyect_images/mas.png")
-no_sound_icon=PhotoImage(file = "src/proyect_images/sinsonido.png")
 pause_icon=PhotoImage(file = "src/proyect_images/pause.png")
 play_icon=PhotoImage(file = "src/proyect_images/play.png")
 find_song_icon=PhotoImage(file = "src/proyect_images/lupapeque.png")
@@ -58,7 +62,6 @@ classic_mini_icon=PhotoImage(file = "src/proyect_images/clasicapeque.png")
 electronic_mini_icon=PhotoImage(file = "src/proyect_images/epeque.png")
 jazz_mini_icon=PhotoImage(file = "src/proyect_images/jazzpeque.png")
 pop_mini_icon=PhotoImage(file = "src/proyect_images/poppeque.png")
-other_mini_icon=PhotoImage(file = "src/proyect_images/otrospeque.png")
 rock_mini_icon=PhotoImage(file = "src/proyect_images/rpeque.png")
 reggaeton_mini_icon=PhotoImage(file = "src/proyect_images/reggaetonpeque.png")
 trap_mini_icon=PhotoImage(file = "src/proyect_images/trappeque.png")
@@ -2453,13 +2456,250 @@ def disckInferface(pos, alert):
 
         #it shows all the artist in the disc and allow to delete it
         def showArtistsInDisk():
+                global pageArtists, showed
                 artistwndw = Toplevel(diskwndw)
                 artistwndw.title("Artistas")
-                artistwndw.geometry("800x700")
+                artistwndw.geometry("300x400")
                 artistwndw['bg']='black'
 
-               
-                                
+                Label(
+                        artistwndw,
+                        background="black",
+                        text="Artistas",
+                        fg="#00bf36",
+                        font="Verdana 30"
+                ).grid(row=0, column=0, pady=30)
+
+                badd_artists=Button(
+                        artistwndw,
+                        background="black",
+                        image=add_artist_icon,
+                        width=30,
+                        height=30
+                )
+                badd_artists.grid(row=0, column=1)
+
+                a1=Label(
+                        artistwndw,
+                        background="black",
+                        text="Artistas",
+                        fg="#00bf36",
+                        font="Verdana 20"
+                )
+                a1.grid(row=1, column=0)
+
+                b1=Button(
+                        artistwndw,
+                        height=45,
+                        width=45,
+                        image=delete_45_icon,
+                        background="black"
+                )
+
+                b1.grid(row=1, column=1)
+
+                a2=Label(
+                        artistwndw,
+                        background="black",
+                        text="Artistas",
+                        fg="#00bf36",
+                        font="Verdana 20"
+                )
+                a2.grid(row=2, column=0)
+
+                b2=Button(
+                        artistwndw,
+                        height=45,
+                        width=45,
+                        image=delete_45_icon,
+                        background="black"
+                )
+                b2.grid(row=2, column=1)
+
+                a3=Label(
+                        artistwndw,
+                        background="black",
+                        text="Artistas",
+                        fg="#00bf36",
+                        font="Verdana 20"
+                )
+                a3.grid(row=3, column=0)
+
+                b3=Button(
+                        artistwndw,
+                        height=45,
+                        width=45,
+                        image=delete_45_icon,
+                        background="black"
+                )
+                b3.grid(row=3, column=1)
+
+                a4=Label(
+                        artistwndw,
+                        background="black",
+                        text="Artistas",
+                        fg="#00bf36",
+                        font="Verdana 20"
+                )
+                a4.grid(row=4, column=0)
+
+                b4=Button(
+                        artistwndw,
+                        height=45,
+                        width=45,
+                        image=delete_45_icon,
+                        background="black"
+                )
+                b4.grid(row=4, column=1)
+
+                bRight2=Button(
+                        artistwndw,
+                        image=arrow_icon,
+                        width=30,
+                        height=30
+                )
+                bRight2.grid(column=1, row=5, pady=30)
+
+                bLeft2=Button(
+                        artistwndw,
+                        image=arrowLeft_icon,
+                        width=30,
+                        height=30
+                )
+                bLeft2.grid(column=0, row=5, sticky="w", pady=30, padx=10)
+
+                artists=[]
+                numArtist=0
+                for artista in root[pos_in_audiolibrary].iter('artista'):
+                        numArtist+=1
+                        artists.append(artista.text)
+                
+                
+                pageArtists=0
+                showed=[0, 1, 2, 3]
+                def changePage():
+                        global pageArtists
+                        global showed
+                        showed=[pageArtists*4, (pageArtists*4)+1, (pageArtists*4)+2, (pageArtists*4)+3]
+                        if numArtist<=((pageArtists*4)+4):
+                                bRight2.grid_forget()
+                        else:
+                                bRight2.grid(column=1, row=5, pady=30)
+                        
+                        if pageArtists==0:
+                                bLeft2.grid_forget()
+                        else:
+                                bLeft2.grid(column=0, row=5, sticky="w", pady=30, padx=10)
+
+                        if(numArtist>showed[0]):
+                                a1.grid(row=1, column=0)
+                                b1.grid(row=1, column=1)
+                                a1.configure(text=artists[pageArtists*4])
+                        else:
+                                a1.grid_forget()
+                                b1.grid_forget()
+
+                        if(numArtist>showed[1]):
+                                a2.grid(row=2, column=0)
+                                b2.grid(row=2, column=1)
+                                a2.configure(text=artists[(pageArtists*4)+1])
+                        else:
+                                a2.grid_forget()
+                                b2.grid_forget()
+
+                        if(numArtist>showed[2]):
+                                a3.grid(row=3, column=0)
+                                b3.grid(row=3, column=1)
+                                a3.configure(text=artists[(pageArtists*4)+2])
+                        else:
+                                a3.grid_forget()
+                                b3.grid_forget()
+
+                        if(numArtist>showed[3]):
+                                a4.grid(row=4, column=0)
+                                b4.grid(row=4, column=1)
+                                a4.configure(text=artists[(pageArtists*4)+3])
+                        else:
+                                a4.grid_forget()
+                                b4.grid_forget()                       
+
+                changePage()
+                def pageRight():
+                        global pageArtists
+                        pageArtists+=1
+                        changePage()
+                def pageLeft():
+                        global pageArtists
+                        pageArtists-=1
+                        changePage()
+                bRight2.configure(command=pageRight)
+                bLeft2.configure(command=pageLeft)
+
+                def deleteArtist(arPos):
+                        count_a=0
+                        for artista in root[pos_in_audiolibrary].iter('artista'):
+                                if(count_a == arPos):
+                                        root[pos_in_audiolibrary].remove(artista)
+                                        tree.write(filename)
+                                        break
+                                count_a+=1
+                        artistwndw.destroy()
+                        showArtistsInDisk()                       
+
+                b1.configure(command=lambda: deleteArtist(showed[0]))
+                b2.configure(command=lambda: deleteArtist(showed[1]))
+                b3.configure(command=lambda: deleteArtist(showed[2]))
+                b4.configure(command=lambda: deleteArtist(showed[3]))
+
+                def addArtists():
+                        newartistwndw = Toplevel(artistwndw)
+                        newartistwndw.title("Nuevo Artista")
+                        newartistwndw.geometry("600x400")
+                        newartistwndw['bg']='black'
+                        Label(
+                                newartistwndw,
+                                text="Nombre del nuevo artista",
+                                background="black",
+                                fg="#00bf36",
+                                font="Verdana 20"
+                        ).grid(row=0, column=0)
+
+                        inputartistname = Text(
+                                newartistwndw,
+                                height = 1,
+                                width = 15,
+                                font="Verdana 30"
+                        )
+                        inputartistname.grid(row=0, column=1, padx=10, pady=20)
+
+                        def addArtistF():
+                                n=inputartistname.get("1.0", "end-1c")
+                                if(n!=""):
+                                        artist=ET.SubElement(root[pos_in_audiolibrary], 'artista')
+                                        artist.text=n
+                                        tree.write(filename)
+
+                                newartistwndw.destroy()
+                                artistwndw.destroy()
+                                showArtistsInDisk()
+
+                        Button(
+                              newartistwndw,
+                              text="Añadir",
+                              background="#00bf36",
+                              font="Verdana 20",
+                              command=addArtistF  
+                        ).grid(row=1, column=0)
+
+                        Button(
+                              newartistwndw,
+                              text="Cancelar",
+                              background="grey",
+                              font="Verdana 20",
+                              command=lambda: newartistwndw.destroy()  
+                        ).grid(row=1, column=1)                
+                
+                badd_artists.configure(command=addArtists)
 
         bmore_artists.configure(command=lambda:showArtistsInDisk())
         bedit1.configure(command=lambda:editSongInterface(0))

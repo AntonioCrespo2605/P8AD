@@ -19,7 +19,7 @@
             <cancion nombre="ivan" duracion="3:00" link="" />
             <cancion nombre="las divinas 2" duracion="3:00" link="" />
             <cancion nombre="primavera" duracion="3:00" link="" /></canciones>
-    <genero>electronic</genero><genero>jazz</genero><genero>trap</genero></disco>
+    <genero>electronic</genero><genero>jazz</genero><genero>trap</genero><artista>artista 8</artista></disco>
     <disco nombre="disco1" anho="1990" imagen="">
         <genero>pop</genero>
         <artista>Paquito</artista>
